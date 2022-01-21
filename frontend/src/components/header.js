@@ -6,7 +6,7 @@ class Header extends Component{
         return(
             <Navbar variant="light">
                 <Container className="header">
-                    <Navbar.Brand href="/"><h2>IT정보공학과 졸업 학점 관리 시스템</h2></Navbar.Brand>
+                    <Navbar.Brand href="/"><h2 className="title">IT정보공학과 졸업 학점 관리 시스템</h2></Navbar.Brand>
                     <Nav>
                         <Nav.Link href="/manage">이수과목관리</Nav.Link>
                         <Nav.Link href="/simulation">졸업시뮬레이션</Nav.Link>

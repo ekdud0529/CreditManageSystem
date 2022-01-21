@@ -43,7 +43,7 @@ class Tables extends Component{
             case 2:         
             case 3:
                 _content =  <Form>
-                <Table>
+                <Table hover>
                     <thead>
                         <tr>
                             <th>이수구분</th>
@@ -57,9 +57,29 @@ class Tables extends Component{
                         </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td>전공선택</td>
+                            <td>공학주제/설계</td>
+                            <td>데이터베이스</td>
+                            <td>2021</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>A+</td>
+                            <td><Button variant="outline-danger" size="sm">삭제</Button></td>
+                        </tr>
+                        <tr>
+                            <td>전공선택</td>
+                            <td>공학주제/설계</td>
+                            <td>병렬분산시스템</td>
+                            <td>2021</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>A+</td>
+                            <td><Button variant="outline-danger" size="sm">삭제</Button></td>
+                        </tr>
                     </tbody>
                 </Table>
-                <Stack className="mt-5 justify-content-center" direction="horizontal" gap={3}>
+                <Stack className="my-3 justify-content-center" direction="horizontal" gap={3}>
                     <Button>추가</Button>
                     {_button}
                 </Stack>

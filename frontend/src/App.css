@@ -1,8 +1,15 @@
 .header.container{
-  padding: 2%;
+  padding: 1%;
   border-bottom: 3px grey solid;
+  font-weight: bold;
 }
 
 .table th,td{
   text-align: center;
+}
+
+.title{
+  text-align: center;
+  font-weight: bold;
+  margin: 3%;  
 }

@@ -4,6 +4,7 @@ a.home{
     height: 450px;
     background-color: skyblue;
     border: 5px skyblue solid;
+    border-radius: 30px;
     font-size: 40px;
     display: inline-flex;
     align-items: center;
