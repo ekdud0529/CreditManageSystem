@@ -1,9 +1,12 @@
-button.home{
+a.home{
     margin: 5%;
     width: 40%;
     height: 500px;
     background-color: skyblue;
     border: 5px skyblue solid;
     font-size: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
