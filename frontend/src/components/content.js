@@ -1,11 +1,12 @@
 import React, {Component} from "react";
+import { Container } from "react-bootstrap";
 
 class Content extends Component{
     render(){
         return(
-            <div className="container">
+            <Container>
                 {this.props.content}
-            </div>
+            </Container>
         );
     }
 

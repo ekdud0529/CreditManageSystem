@@ -1,10 +1,8 @@
-a{
-  text-decoration-line: none !important;
-  color: black !important;
+.header.container{
+  padding: 2%;
+  border-bottom: 3px grey solid;
 }
 
-.container{
-  padding:3%;
-  margin:1%;
-  border: 3px solid grey;
+.table th,td{
+  text-align: center;
 }
