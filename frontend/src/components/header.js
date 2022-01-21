@@ -8,8 +8,8 @@ class Header extends Component{
                 <Container className="header">
                     <Navbar.Brand href="/"><h2>IT정보공학과 졸업 학점 관리 시스템</h2></Navbar.Brand>
                     <Nav>
-                        <Nav.Link href="/">이수과목관리</Nav.Link>
-                        <Nav.Link href="/">졸업시뮬레이션</Nav.Link>
+                        <Nav.Link href="/manage">이수과목관리</Nav.Link>
+                        <Nav.Link href="/simulation">졸업시뮬레이션</Nav.Link>
                         <Nav.Link href="/">로그인</Nav.Link>
                     </Nav>
                 </Container>

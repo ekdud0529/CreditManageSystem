@@ -1,10 +1,10 @@
 import React, {Component} from "react";
-import { Tab, Table } from "react-bootstrap";
+import { Button, Form, Stack, Table } from "react-bootstrap";
 
 class Tables extends Component{
     render(){
         var _content = null;
-        console.log(this.props.id);
+        var _button = this.props.id===2?<Button>저장</Button>:<Button>결과</Button>
         switch(this.props.id){
             case 1:
                 _content =  <Table bordered>
@@ -38,13 +38,35 @@ class Tables extends Component{
                                         <td>0</td>
                                     </tr>
                                 </tbody>
-                            </Table>
-                            break;
-            case 2:
-                _content =  <table></table>
+                            </Table>;
+                break;
+            case 2:         
+            case 3:
+                _content =  <Form>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>이수구분</th>
+                            <th>공학인증</th>
+                            <th>과목명</th>
+                            <th>이수년도</th>
+                            <th>이수학기</th>
+                            <th>학점</th>
+                            <th>등급</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </Table>
+                <Stack className="mt-5 justify-content-center" direction="horizontal" gap={3}>
+                    <Button>추가</Button>
+                    {_button}
+                </Stack>
+            </Form>
                 break;
             default:
-                _content = <div>wrong id</div>
+                _content = <div>wrong id</div>;
 
         }
         return(
