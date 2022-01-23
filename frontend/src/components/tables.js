@@ -87,8 +87,8 @@ class Tables extends Component{
                 break;
             case 4:
                 _content =  <Form className="border mb-3">
-                                <Row className="mb-2">
-                                    <Form.Group as={Col}>
+                                <Row className="my-3">
+                                    <Form.Group as={Col} md={3}>
                                         <Form.Label>연도</Form.Label>
                                         <Form.Select>
                                             <option>전체</option>
@@ -99,7 +99,7 @@ class Tables extends Component{
                                             <option>2017</option>
                                         </Form.Select>
                                     </Form.Group>
-                                    <Form.Group as={Col}>
+                                    <Form.Group as={Col} md={3}>
                                         <Form.Label>학기</Form.Label>
                                         <Form.Select>
                                             <option>전체</option>
@@ -107,7 +107,7 @@ class Tables extends Component{
                                             <option>2</option>
                                         </Form.Select>
                                     </Form.Group>
-                                    <Form.Group as={Col}>
+                                    <Form.Group as={Col} md={3}>
                                         <Form.Label>학년</Form.Label>
                                         <Form.Select>
                                             <option>전체</option>
@@ -118,8 +118,8 @@ class Tables extends Component{
                                         </Form.Select>
                                     </Form.Group>
                                 </Row>
-                                <Row className="mb-2">
-                                    <Form.Group as={Col}>
+                                <Row className="my-3">
+                                    <Form.Group as={Col} md={3}>
                                         <Form.Label>이수구분</Form.Label>
                                         <Form.Select>
                                             <option value="00">전체</option>
@@ -130,7 +130,7 @@ class Tables extends Component{
                                             <option value="00">공통필수</option>
                                         </Form.Select>
                                     </Form.Group>
-                                    <Form.Group as={Col}>
+                                    <Form.Group as={Col} md={4}>
                                         <Form.Label>공학구분</Form.Label>
                                         <div className="border">
                                             <Form.Check inline label="BSM" name="abeek" type="checkbox"/>
