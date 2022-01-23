@@ -3,6 +3,8 @@ import Header from "../components/header";
 import Content from "../components/content";
 import Tables from "../components/tables";
 import CustomModal from "../components/customModal";
+import { Container } from "react-bootstrap";
+import "../stylesheets/manage.css"
 
 class Manage extends Component{
     constructor(props){
@@ -26,17 +28,29 @@ class Manage extends Component{
         switch(this.props.id){
             case 1:
                 _title = "이수과목관리";
-                _content =  <div>
+                var _modalContent = <div>
+                                        <Tables id={4}></Tables>
+                                        <Tables id={5}></Tables>
+                                    </div>;
+                _content =  <Container className="manage">
                                 <Tables id={1}></Tables>
                                 <Tables id={2} onOpenModal={this.openModal}></Tables>
-                                <CustomModal show={this.state.isOpenModal} onHide={this.closeModal}></CustomModal>
-                            </div>;
+                                <CustomModal dialogClassName="modal-w90" title="과목 검색" content={_modalContent} show={this.state.isOpenModal} onHide={this.closeModal}></CustomModal>
+                            </Container>;
                 break;
             case 2:
                 _title = "졸업시뮬레이션";
-                _content =  <div>
-                                <Tables id={3}></Tables>
-                            </div>;
+                var _modalSearchContent =   <div>
+                                                <Tables id={4}></Tables>
+                                                <Tables id={5}></Tables>
+                                            </div>;
+                var _modalResultContent =   <div>
+                                                <Tables id={1}></Tables>
+                                            </div>;
+                _content =  <Container className="manage">
+                                <Tables id={3} onOpenModal={this.openModal}></Tables>
+                                <CustomModal dialogClassName="modal-w90" title="과목 검색" content={_modalSearchContent} show={this.state.isOpenModal} onHide={this.closeModal}></CustomModal>
+                            </Container>;
                 break;
             default:
         }

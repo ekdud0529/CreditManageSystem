@@ -4,18 +4,15 @@ import { Button, Modal } from "react-bootstrap";
 class CustomModal extends Component{
     render(){
         return(
-            <Modal show={this.props.show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-                <Modal.Header>
-                    <Modal.Title  id="contained-modal-title-vcenter">
-                        과목 검색
+            <Modal dialogClassName={this.props.dialogClassName} show={this.props.show} onHide={this.props.onHide} size="lg" centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        {this.props.title}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    ㅇㅇㅇㅇ
+                    {this.props.content}
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={this.props.onHide}>닫기</Button>
-                </Modal.Footer>
             </Modal>
             
         );
