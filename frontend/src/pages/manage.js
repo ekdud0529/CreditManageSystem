@@ -2,8 +2,24 @@ import React, {Component} from "react";
 import Header from "../components/header";
 import Content from "../components/content";
 import Tables from "../components/tables";
+import CustomModal from "../components/customModal";
 
 class Manage extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            isOpenModal : false
+        }
+    }
+
+    openModal = () => {
+        this.setState({isOpenModal : true});
+    }
+
+    closeModal = () => {
+        this.setState({isOpenModal : false});
+    }
+
     render(){
         var _title = null;
         var _content = null;
@@ -12,7 +28,8 @@ class Manage extends Component{
                 _title = "이수과목관리";
                 _content =  <div>
                                 <Tables id={1}></Tables>
-                                <Tables id={2}></Tables>
+                                <Tables id={2} onOpenModal={this.openModal}></Tables>
+                                <CustomModal show={this.state.isOpenModal} onHide={this.closeModal}></CustomModal>
                             </div>;
                 break;
             case 2:

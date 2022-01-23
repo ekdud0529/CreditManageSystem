@@ -8,8 +8,8 @@ class Home extends Component{
     render(){
         var _content = 
         <Container className="home">
-            <Button className="home" href="/manage">이수과목관리</Button>
-            <Button className="home" href="/simulation">졸업시뮬레이션</Button>
+            <Button href="/manage">이수과목관리</Button>
+            <Button href="/simulation">졸업시뮬레이션</Button>
         </Container>
         
         return(
