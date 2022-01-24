@@ -8,23 +8,23 @@ import Form from 'react-bootstrap/Form'
 
 class LogIn extends Component{
 	render(){
-		var _title = "Login";
+		var _title = "로그인";
 		var _content =  <Container className="login">
 							<Form>
 								<Form.Group className="mb-3" controlId="studentId">
-									<Form.Label>Student ID</Form.Label>
-									<Form.Control type="studentId" placeholder="Enter Student Id" />
+									<Form.Label>학번</Form.Label>
+									<Form.Control type="studentId" placeholder="학번을 입력하세요." />
 								</Form.Group>
 
-								<Form.Group className="mb-3" controlId="password">
-									<Form.Label>Password</Form.Label>
-									<Form.Control type="password" placeholder="Enter Password" />
+								<Form.Group className="mb-4" controlId="password">
+									<Form.Label>비밀번호</Form.Label>
+									<Form.Control type="password" placeholder="비밀번호를 입력하세요." />
 								</Form.Group>
 								
 								<Container className="signUpMove">
-									<Button variant="primary" type="submit">SignUp</Button>
+									<Button className="mb-2" variant="primary" type="submit">로그인</Button>
 									<div>
-										<Link to="/signUp">Sign Up</Link>
+										<Link to="/signUp">회원가입</Link>
 									</div>
 								</Container>
 							</Form>

@@ -7,31 +7,31 @@ import Form from 'react-bootstrap/Form'
 
 class SignUp extends Component{
 	render(){
-		var _title = "SignUp";
+		var _title = "회원가입";
 		var _content =  <Container className="login">
 							<Form>
 								<Form.Group className="mb-3" controlId="studentId">
-									<Form.Label>Student ID</Form.Label>
-									<Form.Control type="studentId" placeholder="Enter Student Id" />
+									<Form.Label>학번</Form.Label>
+									<Form.Control type="studentId" placeholder="학번을 입력하세요." />
 								</Form.Group>
 
 								<Form.Group className="mb-3" controlId="studentName">
-									<Form.Label>Your Name</Form.Label>
-									<Form.Control type="name" placeholder="Enter Your Name" />
+									<Form.Label>이름</Form.Label>
+									<Form.Control type="name" placeholder="이름을 입력하세요." />
 								</Form.Group>
 
 								<Form.Group className="mb-3" controlId="password">
-									<Form.Label>Password</Form.Label>
-									<Form.Control type="password" placeholder="Enter Password" />
+									<Form.Label>비밀번호</Form.Label>
+									<Form.Control type="password" placeholder="비밀번호를 입력하세요." />
 								</Form.Group>
 
-								<Form.Group className="mb-3" controlId="checkPassword">
-									<Form.Label>Check Password</Form.Label>
-									<Form.Control type="checkPassword" placeholder="Check Password" />
+								<Form.Group className="mb-4" controlId="checkPassword">
+									<Form.Label>비밀번호 확인</Form.Label>
+									<Form.Control type="checkPassword" placeholder="비밀번호를 확인하세요." />
 								</Form.Group>
 								<Container className="signUpMove">
 									<Button variant="primary" type="submit">
-										SignUp
+										회원가입
 									</Button>
 								</Container>
 							</Form>

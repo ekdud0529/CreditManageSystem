@@ -1,8 +1,12 @@
 .login{
-	width: 30%
+	width: 350px;
+}
+
+.login label{
+	font-weight: bold;
 }
 
 .signUpMove{
-	text-align: center; 
-	margin-top: 10px;
+	text-align: center;
 }
+
