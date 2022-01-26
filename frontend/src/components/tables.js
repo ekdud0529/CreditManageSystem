@@ -182,17 +182,17 @@ class Tables extends Component{
                                             <td>2</td>
                                             <td>3</td>
                                             <td>
-												<Form.Select aria-label="Default select example">
-													<option value="1">A+</option>
-													<option value="2">A</option>
-													<option value="3">B+</option>
-													<option value="4">B</option>
-													<option value="5">C+</option>
-													<option value="6">C</option>
-													<option value="7">D+</option>
-													<option value="8">D</option>
-													<option value="9">P</option>
-													<option value="0">F</option>
+												<Form.Select aria-label="Default select example" size="sm">
+													<option value="A+">A+</option>
+													<option value="A">A</option>
+													<option value="B+">B+</option>
+													<option value="B">B</option>
+													<option value="C+">C+</option>
+													<option value="C">C</option>
+													<option value="D+">D+</option>
+													<option value="D">D</option>
+													<option value="P">P</option>
+													<option value="F">F</option>
 												</Form.Select>
 											</td>
                                             <td><Button variant="outline-success" size="sm">추가</Button></td>
