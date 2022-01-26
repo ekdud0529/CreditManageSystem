@@ -19,3 +19,15 @@
   border-radius: 0.25rem;
   padding: 0.375rem 2.25rem 0.375rem 0.75rem;
 }
+
+.red{
+  color: red;
+}
+
+.green{
+  color: green;
+}
+
+.bold{
+  font-weight: bold;
+}

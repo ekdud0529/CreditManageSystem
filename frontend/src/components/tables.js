@@ -4,7 +4,7 @@ import { Button, Form, Row, Col, Stack, Table } from "react-bootstrap";
 class Tables extends Component{
     render(){
         var _content = null;
-        var _button = this.props.id===2?<Button>저장</Button>:<Button>결과</Button>
+        var _button = this.props.id===2?<Button>저장</Button>:<Button onClick={this.props.onOpenResultModal}>결과</Button>
         switch(this.props.id){
             case 1:
                 _content =  <Table bordered>
@@ -80,15 +80,18 @@ class Tables extends Component{
                                     </tbody>
                                 </Table>
                                 <Stack className="my-3 justify-content-center" direction="horizontal" gap={3}>
-                                    <Button onClick={this.props.onOpenModal}>추가</Button>
+                                    <Button onClick={this.props.onOpenSearchModal}>추가</Button>
                                     {_button}
                                 </Stack>
                             </Form>;
                 break;
             case 4:
+                var visible = null;
+                if(this.props.pageId == 1) visible = true;
+                else visible = false;
                 _content =  <Form className="border mb-3">
                                 <Row className="my-3">
-                                    <Form.Group as={Col} md={3}>
+                                    {visible && <Form.Group as={Col} md={3}>
                                         <Form.Label>연도</Form.Label>
                                         <Form.Select>
                                             <option>전체</option>
@@ -98,7 +101,7 @@ class Tables extends Component{
                                             <option>2018</option>
                                             <option>2017</option>
                                         </Form.Select>
-                                    </Form.Group>
+                                    </Form.Group>}
                                     <Form.Group as={Col} md={3}>
                                         <Form.Label>학기</Form.Label>
                                         <Form.Select>
@@ -184,6 +187,45 @@ class Tables extends Component{
                                     </tbody>
                                 </Table>
                             </Form>
+                break;
+            case 6:
+                _content =  <Table bordered>
+                                <thead>
+                                    <tr>
+                                        <th>선수과목</th>
+                                        <th>후수과목</th>
+                                        <th>만족여부</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>디지털논리설계</td>
+                                        <td className="red">논리회로설계</td>
+                                        <td className="red">불만족</td>
+                                    </tr>
+                                    <tr>
+                                        <td>창의적IT공학설계입문</td>
+                                        <td>논리회로설계</td>
+                                        <td className="green">만족</td>
+                                    </tr>
+                                </tbody>
+                            </Table>;
+                break;
+            case 7:
+                _content =  <Table bordered>
+                                <thead>
+                                    <tr>
+                                        <th>현재 총 평점</th>
+                                        <th>예상 총 평점</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>4.0</td>
+                                        <td>4.2</td>
+                                    </tr>
+                                </tbody>
+                            </Table>;
                 break;
             default:
                 _content = <div>wrong id</div>;
