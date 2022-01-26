@@ -87,7 +87,7 @@ class Tables extends Component{
                 break;
             case 4:
                 var visible = null;
-                if(this.props.pageId == 1) visible = true;
+                if(this.props.pageId === 1) visible = true;
                 else visible = false;
                 _content =  <Form className="border mb-3">
                                 <Row className="my-3">

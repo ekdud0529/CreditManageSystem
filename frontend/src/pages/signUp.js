@@ -1,10 +1,8 @@
 import React, {Component} from "react";
 import "../stylesheets/login.css"
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, Form } from "react-bootstrap";
 import Header from "../components/header";
 import Content from "../components/content";
-import Form from 'react-bootstrap/Form';
-import Feedback from 'react-bootstrap/Feedback';
 
 class SignUp extends Component{
 	constructor(){
