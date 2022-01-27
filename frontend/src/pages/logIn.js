@@ -1,11 +1,9 @@
 import React, {Component} from "react";
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, Form } from "react-bootstrap";
 import "../stylesheets/login.css"
 import { Link } from 'react-router-dom';
 import Header from "../components/header";
 import Content from "../components/content";
-import Form from 'react-bootstrap/Form';
-import Feedback from 'react-bootstrap/Feedback';
 
 class LogIn extends Component{
 	constructor(){

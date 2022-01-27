@@ -1,8 +1,8 @@
-.login{
+.login.container{
 	width: 350px;
 }
 
-.login label{
+.login .form-label{
 	font-weight: bold;
 }
 
