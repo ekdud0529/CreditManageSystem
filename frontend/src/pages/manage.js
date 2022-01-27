@@ -11,7 +11,7 @@ class Manage extends Component{
         super(props);
         this.state = {
             isOpenSearchModal : false,
-            isOpenResultModal : false
+            isOpenResultModal : false,
             data : [
                 {
                     course_id:"0000123123",
