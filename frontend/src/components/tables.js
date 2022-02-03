@@ -17,6 +17,48 @@ class Tables extends Component{
             title:"",
 
             GP:"A+", // 검색화면에서 등급 선택
+            
+            searchData: [
+                {
+                    course_id:"0000123124",
+                    division_name:"전공선택",
+                    abeek_name1:"공학주제",
+                    abeek_name2:"설계",
+                    title:"병렬분산",
+                    year:"2021",
+                    semester:"2",
+                    credit:"3",
+                    GP:"A+",
+                    // key: 0,
+                    id: 0
+                },
+                {
+                    course_id:"0000123457",
+                    division_name:"전공선택",
+                    abeek_name1:"공학주제",
+                    abeek_name2:"설계",
+                    title:"마이크로프로세서",
+                    year:"2021",
+                    semester:"1",
+                    credit:"3",
+                    GP:"A+",
+                    // key: 1,
+                    id: 1
+                },
+                {
+                    course_id:"0000123458",
+                    division_name:"전공선택",
+                    abeek_name1:"공학주제",
+                    abeek_name2:"설계",
+                    title:"졸프",
+                    year:"2021",
+                    semester:"1",
+                    credit:"3",
+                    GP:"A+",
+                    // key: 1,
+                    id: 1
+                }
+            ]
         }
     }
 
@@ -32,66 +74,18 @@ class Tables extends Component{
         }, console.log(e.target.name, e.target.checked))
     }
 
-    render(){
-        var data = this.props.data;
-        var _id = data.length===0?0:data[data.length-1].id+1;
-        var list = [];
-        console.log(_id, data);
-        for(var i=0;i<data.length;i++) {
-            var abeekStr = data[i].abeek_name1 + "/" + data[i].abeek_name2;
-            if(this.props.id === 2 || this.props.id === 3) {
-                list.push(
-                    <tr key={i}>
-                        <td>{data[i].divison_name}</td>
-                        <td>{abeekStr}</td>
-                        <td>{data[i].title}</td>
-                        <td>{data[i].year}</td>
-                        <td>{data[i].semester}</td>
-                        <td>{data[i].credit}</td>
-                        <td>{data[i].GP}</td>
-                        <td><Button id={data[i].id} variant="outline-danger" size="sm" onClick={function(e) {
-                            e.preventDefault();
-                            this.props.onDelete(e.target.id);
-                        }.bind(this)}>삭제</Button></td>
-                    </tr>
-                );
-            } else if(this.props.id === 5) {
-                list.push(
-                    <tr key={i}>
-                        <td>{data[i].course_id}</td>
-                        <td>{data[i].title}</td>
-                        <td>{data[i].division_name}</td>
-                        <td>{abeekStr}</td>
-                        <td>{data[i].year}</td>
-                        <td>{data[i].semester}</td>
-                        <td>{data[i].credit}</td>
-                    <td>
-                        <Form.Select aria-label="Default select example" onChange={this.handleChange} name="GP" size="sm">
-                            <option value="A+">A+</option>
-                            <option value="A">A</option>
-                            <option value="B+">B+</option>
-                            <option value="B">B</option>
-                            <option value="C+">C+</option>
-                            <option value="C">C</option>
-                            <option value="D+">D+</option>
-                            <option value="D">D</option>
-                            <option value="P">P</option>
-                            <option value="F">F</option>
-                        </Form.Select>
-                    </td>
-                    <td><Button id={i} variant="outline-success" size="sm" onClick={function(e) {
-                        e.preventDefault();
-                        console.log("data[",e.target.id,"].id=",_id);
-                        data[e.target.id].id = _id;
-                        data[e.target.id].GP = this.state.GP;
-                        this.props.onAdd(data[e.target.id]);
-                        _id++;
-                    }.bind(this)}>추가</Button></td>
-                    </tr>
-                )
-            } 
-        }
+    handleChangeGP = (e) => {
+        console.log(e.target.id, e.target.value);
+        if(e.target.id === "") this.state.searchData[0].GP = e.target.value;
+        else this.state.searchData[e.target.id].GP = e.target.value;
+    }
 
+    render(){ 
+        // null로 해놓고 for문 다 case문 안으로
+        // searchData: manage -> tables
+        var data = null;
+        var _id = null;
+        var list = [];
         var _content = null;
         var _button = this.props.id===2?<Button>저장</Button>:<Button onClick={this.props.onOpenResultModal}>결과</Button>
         switch(this.props.id){
@@ -131,6 +125,26 @@ class Tables extends Component{
                 break;
             case 2:         
             case 3:
+                data = this.props.data;
+                _id = data.length===0?0:data[data.length-1].id+1
+                for(var i=0;i<data.length;i++) {
+                    var abeekStr = data[i].abeek_name1 + "/" + data[i].abeek_name2;
+                    list.push(
+                        <tr key={i}>
+                            <td>{data[i].division_name}</td>
+                            <td>{abeekStr}</td>
+                            <td>{data[i].title}</td>
+                            <td>{data[i].year}</td>
+                            <td>{data[i].semester}</td>
+                            <td>{data[i].credit}</td>
+                            <td>{data[i].GP}</td>
+                            <td><Button id={data[i].id} variant="outline-danger" size="sm" onClick={function(e) {
+                                e.preventDefault();
+                                this.props.onDelete(e.target.id);
+                            }.bind(this)}>삭제</Button></td>
+                        </tr>
+                    );
+                }
                 _content =  <Form>
                                 <Table hover>
                                     <thead>
@@ -227,6 +241,45 @@ class Tables extends Component{
                             </Form>;
                 break;
             case 5:
+                data = this.props.data;
+                var searchData = this.state.searchData;
+                _id = data.length===0?0:data[data.length-1].id+1
+                for(var i=0;i<searchData.length;i++) {
+                    var abeekStr = searchData[i].abeek_name1 + "/" + searchData[i].abeek_name2;
+                    list.push(
+                        <tr key={i}>
+                            <td>{searchData[i].course_id}</td>
+                            <td>{searchData[i].title}</td>
+                            <td>{searchData[i].division_name}</td>
+                            <td>{abeekStr}</td>
+                            <td>{searchData[i].year}</td>
+                            <td>{searchData[i].semester}</td>
+                            <td>{searchData[i].credit}</td>
+                        <td>
+                            <Form.Select aria-label="Default select example" id={i} onChange={this.handleChangeGP} name="GP" size="sm">
+                                <option value="A+">A+</option>
+                                <option value="A">A</option>
+                                <option value="B+">B+</option>
+                                <option value="B">B</option>
+                                <option value="C+">C+</option>
+                                <option value="C">C</option>
+                                <option value="D+">D+</option>
+                                <option value="D">D</option>
+                                <option value="P">P</option>
+                                <option value="F">F</option>
+                            </Form.Select>
+                        </td>
+                        <td><Button id={i} variant="outline-success" size="sm" onClick={function(e) {
+                            e.preventDefault();
+                            console.log("data[",e.target.id,"].id=",_id);
+                            searchData[e.target.id].id = _id;
+                            // searchData[e.target.id].GP = this.state.GP;
+                            this.props.onAdd(searchData[e.target.id]);
+                            _id++;
+                        }.bind(this)}>추가</Button></td>
+                        </tr>
+                    )
+                }
                 _content =  <Form>
                                 <Table hover>
                                     <thead>
