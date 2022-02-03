@@ -15,7 +15,6 @@ class Tables extends Component{
             abeek_tech: false,
             abeek_design: false,
             title:"",
-
             GP:"A+", // 검색화면에서 등급 선택
             
             searchData: [
