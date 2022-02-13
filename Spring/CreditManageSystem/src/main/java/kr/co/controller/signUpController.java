@@ -23,12 +23,6 @@ public class signUpController {
 	@Inject
 	signUpService service;
 	
-	// 회원가입 데이터 get
-	@RequestMapping(value="/signUp", method = RequestMethod.GET)
-	public void getRegister() throws Exception{
-		Logger.info("get register");
-	}
-	
 	// 회원가입 데이터 post
 	@CrossOrigin
 	@RequestMapping(value="/signUp", method = RequestMethod.POST)
