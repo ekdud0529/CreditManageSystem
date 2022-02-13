@@ -45,14 +45,14 @@ class SignUp extends Component{
 							name: this.state.studentName,
 							password: this.state.password
 						})
+						.catch(function(error){
+							alert("이미 존재하는 학번입니다.");
+						})
 						// then -> post 후 과정
 						.then(function(response){ // response -> 스프링에서 받아온 데이터
 							console.log(response.date); //-> 데이터를 사용하기 위해선 뒤에 .data 붙여야함
-						})
-						.catch(function (error){
-							alert("회원가입 실패");
+							alert("회원가입 성공");
 						});
-				alert("회원가입 성공");
 			}
 			else
 				alert("회원가입 실패");	
