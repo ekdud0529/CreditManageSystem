@@ -4,6 +4,10 @@ import { Button, Form, Row, Col, Stack, Table } from "react-bootstrap";
 class Tables extends Component{
     constructor(props){
         super(props);
+        if(this.props.id===1){
+            this.props.getCriteria();
+            this.props.calcCredit();
+        }
         this.state = {
             // 검색 state
             year:"",
@@ -16,7 +20,6 @@ class Tables extends Component{
             abeek_design: false,
             title:"",
             GP:"A+", // 검색화면에서 등급 선택
-            
             searchData: [
                 {
                     course_id:"0000123124",
@@ -55,10 +58,11 @@ class Tables extends Component{
                     credit:"3",
                     GP:"A+",
                     // key: 1,
-                    id: 1
+                    id: 2
                 }
             ]
         }
+
     }
 
     handleChange = (e) => {
@@ -75,24 +79,25 @@ class Tables extends Component{
 
     handleChangeGP = (e) => {
         console.log(e.target.id, e.target.value);
-        if(e.target.id === "") this.state.searchData[0].GP = e.target.value;
-        else this.state.searchData[e.target.id].GP = e.target.value;
+        let _searchData = this.state.searchData;
+        _searchData[e.target.id].GP = e.target.value;
+        this.setState({searchData:_searchData});
     }
 
     render(){ 
         // null로 해놓고 for문 다 case문 안으로
         // searchData: manage -> tables
         var data = null;
-        var _id = null;
         var list = [];
         var _content = null;
         var _button = this.props.id===2?<Button>저장</Button>:<Button onClick={this.props.onOpenResultModal}>결과</Button>
         switch(this.props.id){
             case 1:
-                _content =  <Table bordered>
+                _content =  this.props.criteria.length === 0?null:
+                            <Table bordered>
                                 <thead>
                                     <tr>
-                                        <th colSpan={5}>졸업구분</th>
+                                        <th colSpan={5}>졸업 구분</th>
                                         <th colSpan={4}>공학인증 구분</th>
                                     </tr>
                                     <tr>
@@ -109,15 +114,15 @@ class Tables extends Component{
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
+                                        <td>{this.props.credit.rm}/{this.props.criteria[5].criteria_credit}</td>
+                                        <td>{this.props.credit.em}/{this.props.criteria[6].criteria_credit}</td>
+                                        <td>{this.props.credit.tl}/{this.props.criteria[4].criteria_credit}({this.props.criteria[3].criteria_credit})</td>
+                                        <td>{this.props.credit.ge + this.props.credit.cr}</td>
+                                        <td>{this.props.credit.total}/{this.props.criteria[11].criteria_credit}</td>
+                                        <td>{this.props.credit.bsm}/{this.props.criteria[7].criteria_credit}</td>
+                                        <td>{this.props.credit.sl}/{this.props.criteria[8].criteria_credit}</td>
+                                        <td>{this.props.credit.eg}/{this.props.criteria[10].criteria_credit}</td>
+                                        <td>{this.props.credit.ds}/{this.props.criteria[9].criteria_credit}</td>
                                     </tr>
                                 </tbody>
                             </Table>;
@@ -125,9 +130,8 @@ class Tables extends Component{
             case 2:         
             case 3:
                 data = this.props.data;
-                _id = data.length===0?0:data[data.length-1].id+1
-                for(var i=0;i<data.length;i++) {
-                    var abeekStr = data[i].abeek_name1 + "/" + data[i].abeek_name2;
+                for(let i=0;i<data.length;i++) {
+                    let abeekStr = data[i].abeek_name1 + "/" + data[i].abeek_name2;
                     list.push(
                         <tr key={i}>
                             <td>{data[i].division_name}</td>
@@ -149,7 +153,7 @@ class Tables extends Component{
                                     <thead>
                                         <tr>
                                             <th>이수구분</th>
-                                            <th>공학인증</th>
+                                            <th>공학인증구분</th>
                                             <th>과목명</th>
                                             <th>이수년도</th>
                                             <th>이수학기</th>
@@ -242,9 +246,8 @@ class Tables extends Component{
             case 5:
                 data = this.props.data;
                 var searchData = this.state.searchData;
-                _id = data.length===0?0:data[data.length-1].id+1
-                for(var i=0;i<searchData.length;i++) {
-                    var abeekStr = searchData[i].abeek_name1 + "/" + searchData[i].abeek_name2;
+                for(let i=0;i<searchData.length;i++) {
+                    let abeekStr = searchData[i].abeek_name1 + "/" + searchData[i].abeek_name2;
                     list.push(
                         <tr key={i}>
                             <td>{searchData[i].course_id}</td>
@@ -255,7 +258,7 @@ class Tables extends Component{
                             <td>{searchData[i].semester}</td>
                             <td>{searchData[i].credit}</td>
                         <td>
-                            <Form.Select aria-label="Default select example" id={i} onChange={this.handleChangeGP} name="GP" size="sm">
+                            <Form.Select aria-label="Default select example" id={i===0?"0":i} onChange={this.handleChangeGP} name="GP" size="sm">
                                 <option value="A+">A+</option>
                                 <option value="A">A</option>
                                 <option value="B+">B+</option>
@@ -270,11 +273,7 @@ class Tables extends Component{
                         </td>
                         <td><Button id={i} variant="outline-success" size="sm" onClick={function(e) {
                             e.preventDefault();
-                            console.log("data[",e.target.id,"].id=",_id);
-                            searchData[e.target.id].id = _id;
-                            // searchData[e.target.id].GP = this.state.GP;
                             this.props.onAdd(searchData[e.target.id]);
-                            _id++;
                         }.bind(this)}>추가</Button></td>
                         </tr>
                     )
