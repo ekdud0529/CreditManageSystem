@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SimulationMapper">
+	<!-- 졸업기준 -->
+	<select id="criteria" parameterType="int" resultType="kr.co.vo.SimulationVO">
+		select g.admission_year, g.criteria_cd, g.criteria_credit, gc.criteria_name 
+		from grad_criteria g, grad_category gc
+		where g.criteria_cd = gc.criteria_cd and admission_year = #{admissionYear}
+	</select>
+</mapper>
