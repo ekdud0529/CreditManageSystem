@@ -51,13 +51,12 @@ public class SimulationServiceImpl implements SimulationService{
 		CreditVO etc = new CreditVO(studentId,"014","공필/일선",etcTotal);
 		CreditVO design = new CreditVO(studentId,"023","설계",designTotal);
 		CreditVO take = new CreditVO(studentId,"01","취득학점",takeTotal);
+		result.add(take);
 		result.add(liberal);
 		result.addAll(tmp.subList(0, 4));
 		result.addAll(tmp.subList(4, 6));
 		result.add(etc);
-		result.addAll(tmp.subList(6, 8));
-		result.add(take);
-		result.addAll(tmp.subList(8, 10));
+		result.addAll(tmp.subList(6, 10));
 		result.add(design);
 		result.addAll(tmp.subList(10, 14));
 		

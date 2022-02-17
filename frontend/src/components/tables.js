@@ -118,11 +118,11 @@ class Tables extends Component{
                                 </thead>
                                 <tbody>
                                     <tr>
-                                    <td>{this.props.credit[0].total}/{this.props.criteria[1].criteria_credit}({this.props.criteria[5].criteria_credit})</td>
-                                        <td>{this.props.credit[5].total}/{this.props.criteria[7].criteria_credit}</td>
-                                        <td>{this.props.credit[6].total}/{this.props.criteria[8].criteria_credit}</td>
-                                        <td>{this.props.credit[7].total}</td>
-                                        <td>{this.props.credit[10].total}/{this.props.criteria[0].criteria_credit}</td>
+                                    <td>{this.props.credit[1].total}/{this.props.criteria[1].criteria_credit}({this.props.criteria[5].criteria_credit})</td>
+                                        <td>{this.props.credit[6].total}/{this.props.criteria[7].criteria_credit}</td>
+                                        <td>{this.props.credit[7].total}/{this.props.criteria[8].criteria_credit}</td>
+                                        <td>{this.props.credit[8].total}</td>
+                                        <td>{this.props.credit[0].total}/{this.props.criteria[0].criteria_credit}</td>
                                         <td>{this.props.credit[11].total}/{this.props.criteria[9].criteria_credit}</td>
                                         <td>{this.props.credit[12].total}/{this.props.criteria[10].criteria_credit}</td>
                                         <td>{this.props.credit[13].total}/{this.props.criteria[11].criteria_credit}</td>
