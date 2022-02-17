@@ -9,10 +9,12 @@ import kr.co.vo.logInVO;
 
 @Service
 public class logInServiceImpl implements logInService{
-	@Inject logInDAO dao;
+	
+	@Inject
+	logInDAO dao;
 	
 	@Override
-	public logInVO login(logInVO vo) throws Exception {
-		return dao.login(vo);
+	public logInVO logIn(logInVO vo) throws Exception {
+		return dao.logIn(vo);
 	}
 }

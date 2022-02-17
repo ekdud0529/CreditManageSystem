@@ -15,7 +15,7 @@
 	</insert>
 	
 	<!-- 로그인 데이터 불러오기 -->
-	<select id="login" resultType="kr.co.vo.logInVO" parameterType="kr.co.vo.logInVO">
+	<select id="login" resultType="kr.co.vo.logInVO">
 		SELECT STUDENT_ID, PW 
 		FROM STUDENT_TEST
 		WHERE STUDENT_ID = #{studentId} AND PW = #{password}

@@ -24,44 +24,40 @@ class SignUp extends Component{
 	}
 
 	handleSubmit = (e) => {
+		e.preventDefault();
+
 		// 입력 여부 확인
 		const form = e.currentTarget;
 		if (form.checkValidity() === false){
-			e.preventDefault(); // 제출 시 새로고침 방지
+			// e.preventDefault(); // 제출 시 새로고침 방지
 			e.stopPropagation();  // 이벤트 전파 중단
 		}
 		this.setState({validated: true});
 
-		e.preventDefault();
 		// 비밀번호 확인
-		if(this.state.validated === true){
-			if(this.state.password === this.state.checkPassword)
-			{
-				if(this.state.studentId && this.state.studentName && this.state.password)
-				{	
-					axios.post('/signUp', {
-								studentId: this.state.studentId,
-								name: this.state.studentName,
-								password: this.state.password
-							})
-							.then(function(response){
-								alert("회원가입 성공");
-								window.location.href="/logIn";
-							})
-							.catch(function(error) {
-								alert("이미 존재하는 학번입니다.");
-							});
-				}
-				else
-					alert("회원가입 실패");	
+		if(this.state.password === this.state.checkPassword)
+		{
+			if(this.state.studentId && this.state.studentName && this.state.password)
+			{	
+				axios.post("/signUp", {
+							studentId: this.state.studentId,
+							name: this.state.studentName,
+							password: this.state.password
+						})
+						.then((response) => {
+							alert("회원가입 성공");
+							window.location.href="/logIn";
+						})
+						.catch(function(error) {
+							alert("회원가입에 실패했습니다.");
+						});
 			}
 			else
-			{
-				alert("비밀번호를 확인해주세요.");
-			}
+				alert("모두 작성해 주세요.");	
 		}
-		else{
-			alert("빈칸을 채워주세요.");
+		else
+		{
+			alert("비밀번호를 확인해주세요.");
 		}
 	};
 

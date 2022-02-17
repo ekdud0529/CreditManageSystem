@@ -21,13 +21,13 @@ public class logInController {
 	@Inject
 	logInService service;
 	
-	@CrossOrigin
 	@ResponseBody
-	@RequestMapping(value="/logIn", method = RequestMethod.POST)
+	@CrossOrigin
+	@RequestMapping(value="/logIn", method=RequestMethod.POST)
 	public logInVO login(@RequestBody logInVO vo) throws Exception{
 		Logger.info("post login");
 		
-		logInVO login = service.login(vo);
+		logInVO login = service.logIn(vo);
 		
 		System.out.println(vo.getStudentId());
 		System.out.println(vo.getPassword());

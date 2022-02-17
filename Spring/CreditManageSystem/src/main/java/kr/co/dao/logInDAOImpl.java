@@ -9,11 +9,12 @@ import kr.co.vo.logInVO;
 
 @Repository
 public class logInDAOImpl implements logInDAO{
+	
 	@Inject
 	private SqlSession sql;
 	
 	@Override
-	public logInVO login(logInVO vo) throws Exception{
+	public logInVO logIn(logInVO vo) throws Exception {
 		return sql.selectOne("MemberMapper.login", vo);
 	}
 }

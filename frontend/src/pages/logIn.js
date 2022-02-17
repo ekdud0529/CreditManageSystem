@@ -23,39 +23,34 @@ class LogIn extends Component{
 	}
 
 	handleSubmit = (e) => {
+		e.preventDefault();
+
 		const form = e.currentTarget;
 		if (form.checkValidity() === false){
-			e.preventDefault();
+			//e.preventDefault();
 			e.stopPropagation();
 		}
 		this.setState({validated: true});
-		e.preventDefault();
-		if(this.state.validated)
+		
+		if(this.state.studentId && this.state.password)
 		{
-			if(this.state.studentId && this.state.password)
-			{
-				axios.post('/logIn', {
-					studentId: this.state.studentId,
-					password: this.state.password
-				})
-				.catch(function(error){
-					alert("학번 또는 비밀번호를 다시 확인해주세요.");
-				})
-				.then(function(response){
-					let id = response.date.studentId;
-					let pw = response.data.password;
+			axios.post("/logIn", {
+				studentId: this.state.studentId,
+				password: this.state.password
+			})
+			.catch(function(error){
+				alert("학번 또는 비밀번호를 다시 확인해주세요.");
+			})
+			.then((response) => {
+				let id = response.data.studentId;
+				let pw = response.data.password;
 
-					if(id === this.state.studentId && pw === this.state.password)
-					{
-						window.location.href="/";
-					}
-					else alert("아이디 또는 비밀번호가 틀렸습니다.");
-				});
-			}
-		}
-		else
-		{
-			alert("빈칸을 채워주세요.");
+				if(id === this.state.studentId && pw === this.state.password)
+				{
+					window.location.href="/";
+				}
+				else alert("아이디 또는 비밀번호가 틀렸습니다.");
+			});
 		}
 	};
 
