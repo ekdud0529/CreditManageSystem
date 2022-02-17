@@ -14,21 +14,7 @@ class Manage extends Component{
             isOpenSearchModal : false,
             isOpenResultModal : false,
             criteria:[],
-            credit:{  
-                        bl:0,   //기초교양
-                        kl:0,   //핵심교양
-                        gl:0,   //일반교양
-                        tl:0,   //교양총합
-                        rm:0,   //전필
-                        em:0,   //전선
-                        ge:0,   //일선
-                        cr:0,   //공필
-                        total:0,
-                        sl:0,   //전문교양
-                        bsm:0,
-                        eg:0,   //공학주제
-                        ds:0    //설계                      
-                    },
+            credit:[],
             data : [
                 {
                     course_id:"0000123123",
@@ -99,7 +85,6 @@ class Manage extends Component{
         }
         newData.id = _id;
         _data.push(newData);
-        this.calcCredit(_data);
     }
 
     onDelete = (_id) => {
@@ -113,92 +98,23 @@ class Manage extends Component{
         }
         console.log(list);
         this.setState({data: list});
-        this.calcCredit(list);
-    }
-
-    calcCredit = (data) => {
-        let _data = data;
-        let credit = {  
-                        bl:0,   //기초교양
-                        kl:0,   //핵심교양
-                        gl:0,   //일반교양
-                        tl:0,   //교양총합
-                        rm:0,   //전필
-                        em:0,   //전선
-                        ge:0,   //일선
-                        cr:0,   //공필
-                        total:0,
-                        sl:0,   //전문교양
-                        bsm:0,
-                        eg:0,   //공학주제
-                        ds:0    //설계                      
-                    };
-        for(let i = 0;i<_data.length;i++){
-            switch(_data[i].division_name){
-                case "기초교양":
-                    credit.bl += 3;
-                    break;
-                case "핵심교양":
-                    credit.kl += 3;
-                    break;
-                case "일반교양":
-                    credit.gl += 3;
-                    break;
-                case "전공필수":
-                    credit.rm += 3;
-                    break;
-                case "전공선택":
-                    credit.em += 3;
-                    break;
-                case "일반선택":
-                    credit.ge += 3;
-                    break;
-                case "공통필수":
-                    credit.cr += 0.5;
-                    break;
-                default:break;
-            }
-            switch(_data[i].abeek_name1){
-                case "전문교양":
-                    credit.sl += 3;
-                    break;
-                case "BSM":
-                    credit.bsm += 3;
-                    break;
-                case "공학주제":
-                    credit.eg += 3;
-                    break;
-                case "설계":
-                    credit.ds += 1;
-                    break;
-                default:break;
-            }
-            switch(_data[i].abeek_name2){
-                case "전문교양":
-                    credit.sl++;
-                    break;
-                case "BSM":
-                    credit.bsm++;
-                    break;
-                case "공학주제":
-                    credit.eg++;
-                    break;
-                case "설계":
-                    credit.ds++;
-                    break;
-                default:break;
-            }
-        }
-        credit.tl = credit.bl + credit.kl + credit.gl;
-        credit.total = credit.tl + credit.rm + credit.em + credit.ge + credit.cr;
-        this.setState({credit:credit});
     }
 
     getCriteria = () => {
         axios.post("/criteria",{admission_year:2018})
         .then(function(response){
-            var criteriaData = response.data;
+            let criteriaData = response.data;
+            console.log(criteriaData);
             this.setState({criteria : criteriaData});
+        }.bind(this));
+    }
+
+    getCredit = () => {
+        axios.post("/credit",{student_id:"201819186"})
+        .then(function(response){
+            let creditData = response.data; 
+            console.log(creditData);
+            this.setState({credit : creditData});
         }.bind(this));
     }
 
@@ -253,7 +169,7 @@ class Manage extends Component{
                                         <Tables id={5} data={this.state.data} searchData={this.state.searchData} onAdd={this.onAdd}></Tables>
                                     </div>;
                 _content =  <Container className="manage">
-                                <Tables id={1} getCriteria={this.getCriteria} calcCredit={()=>this.calcCredit(this.state.data)} criteria={this.state.criteria}  credit={this.state.credit}></Tables>
+                                <Tables id={1} getCriteria={this.getCriteria} getCredit={this.getCredit} criteria={this.state.criteria}  credit={this.state.credit}></Tables>
                                 <Tables id={2} onOpenSearchModal={()=>this.openModal(1)} data={this.state.data} onDelete={this.onDelete}></Tables>
                                 <CustomModal dialogClassName="modal-w90" title="과목 검색" content={_modalContent} show={this.state.isOpenSearchModal} onHide={()=>this.closeModal(1)}></CustomModal>
                             </Container>;
@@ -267,7 +183,7 @@ class Manage extends Component{
                 var _modalResultContent =   <Form className="manage result">
                                                 <Form.Group>
                                                     <Form.Label>이수현황</Form.Label>
-                                                    <Tables id={1} getCriteria={this.getCriteria} calcCredit={()=>this.calcCredit(this.state.data)} criteria={this.state.criteria} credit={this.state.credit}></Tables>
+                                                    <Tables id={1} getCriteria={this.getCriteria} getCredit={this.getCredit} criteria={this.state.criteria} credit={this.state.credit}></Tables>
                                                 </Form.Group>
                                                 <Form.Group>
                                                     <Form.Label>선후수 만족 여부</Form.Label>

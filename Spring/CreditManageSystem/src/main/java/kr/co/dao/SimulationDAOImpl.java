@@ -7,7 +7,8 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import kr.co.vo.SimulationVO;
+import kr.co.vo.CreditVO;
+import kr.co.vo.CriteriaVO;
 
 @Repository
 public class SimulationDAOImpl implements SimulationDAO{
@@ -15,9 +16,16 @@ public class SimulationDAOImpl implements SimulationDAO{
 	@Inject
 	private SqlSession sqlSession;
 
+	//¡πæ˜±‚¡ÿ
 	@Override
-	public List<SimulationVO> criteria(int admissionYear) throws Exception {
+	public List<CriteriaVO> criteria(int admissionYear) throws Exception {
 		return sqlSession.selectList("SimulationMapper.criteria", admissionYear);
+	}
+
+	//√ÎµÊ«–¡°
+	@Override
+	public List<CreditVO> credit(String studentId) throws Exception {
+		return sqlSession.selectList("SimulationMapper.credit", studentId);
 	}
 	
 }

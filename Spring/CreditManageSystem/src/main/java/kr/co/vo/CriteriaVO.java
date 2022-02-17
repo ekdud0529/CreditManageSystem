@@ -1,11 +1,12 @@
 package kr.co.vo;
 
-public class SimulationVO {
+public class CriteriaVO {
 	
 	private int admission_year;
 	private String criteria_cd;
 	private int criteria_credit;
 	private String criteria_name;
+	
 	public int getAdmission_year() {
 		return admission_year;
 	}
@@ -30,7 +31,4 @@ public class SimulationVO {
 	public void setCriteria_name(String criteria_name) {
 		this.criteria_name = criteria_name;
 	}
-	
-	
-
 }

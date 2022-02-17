@@ -1,13 +1,12 @@
 import React, {Component} from "react";
 import { Button, Form, Row, Col, Stack, Table } from "react-bootstrap";
-import axios from 'axios';
 
 class Tables extends Component{
     constructor(props){
         super(props);
         if(this.props.id===1){
             this.props.getCriteria();
-            this.props.calcCredit();
+            this.props.getCredit();
         }
         this.state = {
             // 검색 state
@@ -98,7 +97,7 @@ class Tables extends Component{
         var _button = this.props.id===2?<Button>저장</Button>:<Button onClick={this.props.onOpenResultModal}>결과</Button>
         switch(this.props.id){
             case 1:
-                _content =  this.props.criteria.length === 0?null:
+                _content =  this.props.criteria.length === 0 || this.props.credit.length === 0?null:
                             <Table bordered>
                                 <thead>
                                     <tr>
@@ -106,28 +105,28 @@ class Tables extends Component{
                                         <th colSpan={4}>공학인증 구분</th>
                                     </tr>
                                     <tr>
+                                        <th>교양</th>
                                         <th>전공필수</th>
                                         <th>전공선택</th>
-                                        <th>교양</th>
                                         <th>공필/일선</th>
                                         <th>취득학점</th>
                                         <th>BSM</th>
                                         <th>전문교양</th>
-                                        <th>공학주제</th>
                                         <th>설계</th>
+                                        <th>공학주제</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{this.props.credit.rm}/{this.props.criteria[5].criteria_credit}</td>
-                                        <td>{this.props.credit.em}/{this.props.criteria[6].criteria_credit}</td>
-                                        <td>{this.props.credit.tl}/{this.props.criteria[4].criteria_credit}({this.props.criteria[3].criteria_credit})</td>
-                                        <td>{this.props.credit.ge + this.props.credit.cr}</td>
-                                        <td>{this.props.credit.total}/{this.props.criteria[11].criteria_credit}</td>
-                                        <td>{this.props.credit.bsm}/{this.props.criteria[7].criteria_credit}</td>
-                                        <td>{this.props.credit.sl}/{this.props.criteria[8].criteria_credit}</td>
-                                        <td>{this.props.credit.eg}/{this.props.criteria[10].criteria_credit}</td>
-                                        <td>{this.props.credit.ds}/{this.props.criteria[9].criteria_credit}</td>
+                                    <td>{this.props.credit[0].total}/{this.props.criteria[1].criteria_credit}({this.props.criteria[5].criteria_credit})</td>
+                                        <td>{this.props.credit[5].total}/{this.props.criteria[7].criteria_credit}</td>
+                                        <td>{this.props.credit[6].total}/{this.props.criteria[8].criteria_credit}</td>
+                                        <td>{this.props.credit[7].total}</td>
+                                        <td>{this.props.credit[10].total}/{this.props.criteria[0].criteria_credit}</td>
+                                        <td>{this.props.credit[11].total}/{this.props.criteria[9].criteria_credit}</td>
+                                        <td>{this.props.credit[12].total}/{this.props.criteria[10].criteria_credit}</td>
+                                        <td>{this.props.credit[13].total}/{this.props.criteria[11].criteria_credit}</td>
+                                        <td>{this.props.credit[17].total}/{this.props.criteria[12].criteria_credit}</td>                                        
                                     </tr>
                                 </tbody>
                             </Table>;

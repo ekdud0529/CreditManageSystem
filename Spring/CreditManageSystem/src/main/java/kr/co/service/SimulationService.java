@@ -2,10 +2,14 @@ package kr.co.service;
 
 import java.util.List;
 
-import kr.co.vo.SimulationVO;
+import kr.co.vo.CreditVO;
+import kr.co.vo.CriteriaVO;
 
 public interface SimulationService {
+	//¡πæ˜±‚¡ÿ
+	public List<CriteriaVO> criteria(int admissionYear) throws Exception;
 	
-	public List<SimulationVO> criteria(int admissionYear) throws Exception;
+	//√ÎµÊ«–¡°
+	public List<CreditVO> credit(String studentId) throws Exception;
 
 }
