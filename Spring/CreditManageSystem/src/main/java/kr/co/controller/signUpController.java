@@ -34,6 +34,6 @@ public class signUpController {
 		System.out.println("name : " + vo.getName());
 		
 		service.register(vo);
-		return "redirect:/";
+		return "회원가입 성공";
 	}
 }

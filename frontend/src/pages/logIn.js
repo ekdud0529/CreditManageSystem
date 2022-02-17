@@ -4,13 +4,22 @@ import "../stylesheets/login.css"
 import { Link } from 'react-router-dom';
 import Header from "../components/header";
 import Content from "../components/content";
+import axios from "axios";
 
 class LogIn extends Component{
-	constructor(){
-		super();
+	constructor(props){
+		super(props);
 		this.state = {
-			validated: false
+			validated: false,
+			studentId: "",
+			password: ""
 		};
+	}
+
+	handleChange = (e) => {
+		this.setState({
+			[e.target.name]: e.target.value
+		});
 	}
 
 	handleSubmit = (e) => {
@@ -20,6 +29,20 @@ class LogIn extends Component{
 			e.stopPropagation();
 		}
 		this.setState({validated: true});
+
+		if(this.state.studentId && this.state.password)
+		{
+			axios.post('/logIn', {
+				studentId: this.state.studentId,
+				password: this.state.password
+			})
+			.then((response) => {
+				alert(response.data);
+			})
+			.catch(function(error){
+				alert("학번 또는 비밀번호를 다시 확인해주세요");
+			});
+		}
 	};
 
 	render(){
@@ -28,13 +51,13 @@ class LogIn extends Component{
 							<Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
 								<Form.Group className="mb-3" controlId="studentId">
 									<Form.Label>학번</Form.Label>
-									<Form.Control required type="text"	placeholder="학번을 입력하세요."/>
+									<Form.Control required type="text"	placeholder="학번을 입력하세요." name="studentId" value={this.state.studentId} onChange={this.handleChange}/>
 									<Form.Control.Feedback type="invalid">학번을 입력해주세요!</Form.Control.Feedback>
 								</Form.Group>
 
 								<Form.Group className="mb-4" controlId="password">
 									<Form.Label>비밀번호</Form.Label>
-									<Form.Control required type="password" placeholder="비밀번호를 입력하세요." />
+									<Form.Control required type="password" placeholder="비밀번호를 입력하세요." name="password" value={this.state.password} onChange={this.handleChange}/>
 									<Form.Control.Feedback type="invalid">비밀번호를 입력해주세요!</Form.Control.Feedback>
 								</Form.Group>
 								

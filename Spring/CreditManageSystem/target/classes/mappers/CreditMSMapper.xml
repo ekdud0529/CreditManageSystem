@@ -12,4 +12,9 @@
 								, #{name}
 								, #{password})
 	</insert>
+	
+	<select id="login" resultType="kr.co.vo.signUpVO">
+		SELECT STUDENT_ID, PW FROM STUDENT_TEST
+		WHERE STUDENT_ID = #{studentId} AND PW = #{password}
+	</select>
 </mapper>
