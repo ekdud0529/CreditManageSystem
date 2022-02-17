@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.service.logInService;
-import kr.co.vo.signUpVO;
+import kr.co.vo.logInVO;
 
 @Controller
 @RequestMapping("")
@@ -24,16 +24,17 @@ public class logInController {
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/logIn", method = RequestMethod.POST)
-	public String login(@RequestBody signUpVO vo) throws Exception{
+	public logInVO login(@RequestBody logInVO vo) throws Exception{
 		Logger.info("post login");
 		
-		signUpVO login = service.login(vo);
+		logInVO login = service.login(vo);
 		
-		if(login == null) {
-			return "Failed";
-		}
-		else {
-			return "success";
-		}
+		System.out.println(vo.getStudentId());
+		System.out.println(vo.getPassword());
+		System.out.println("\n\n");
+		System.out.println(login.getStudentId());
+		System.out.println(login.getPassword());
+		
+		return login;
 	}
 }

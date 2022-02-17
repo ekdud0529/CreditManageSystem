@@ -1,8 +1,8 @@
 package kr.co.dao;
 
-import kr.co.vo.signUpVO;
+import kr.co.vo.logInVO;
 
 public interface logInDAO {
 	// ·Î±×ÀÎ
-	public signUpVO login(signUpVO vo) throws Exception;
+	public logInVO login(logInVO vo) throws Exception;
 }

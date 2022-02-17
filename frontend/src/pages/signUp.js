@@ -31,31 +31,37 @@ class SignUp extends Component{
 			e.stopPropagation();  // 이벤트 전파 중단
 		}
 		this.setState({validated: true});
-		
+
+		e.preventDefault();
 		// 비밀번호 확인
-		if(this.state.password === this.state.checkPassword)
-		{
-			if(this.state.studentId && this.state.studentName && this.state.password)
-			{	
-				axios.post('/signUp', {
-							studentId: this.state.studentId,
-							name: this.state.studentName,
-							password: this.state.password
-						})
-						.then((response) => {
-							alert("회원가입 성공");
-						}).bind(this)
-						.catch(function(error) {
-							alert("이미 존재하는 학번입니다.");
-						});
-				e.preventDefault();
+		if(this.state.validated === true){
+			if(this.state.password === this.state.checkPassword)
+			{
+				if(this.state.studentId && this.state.studentName && this.state.password)
+				{	
+					axios.post('/signUp', {
+								studentId: this.state.studentId,
+								name: this.state.studentName,
+								password: this.state.password
+							})
+							.then(function(response){
+								alert("회원가입 성공");
+								window.location.href="/logIn";
+							})
+							.catch(function(error) {
+								alert("이미 존재하는 학번입니다.");
+							});
+				}
+				else
+					alert("회원가입 실패");	
 			}
 			else
-				alert("회원가입 실패");	
+			{
+				alert("비밀번호를 확인해주세요.");
+			}
 		}
-		else
-		{
-			alert("비밀번호를 확인해주세요.");
+		else{
+			alert("빈칸을 채워주세요.");
 		}
 	};
 

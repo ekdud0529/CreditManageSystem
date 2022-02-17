@@ -1,7 +1,7 @@
 package kr.co.service;
 
-import kr.co.vo.signUpVO;
+import kr.co.vo.logInVO;
 
 public interface logInService {
-	public signUpVO login(signUpVO vo) throws Exception;
+	public logInVO login(logInVO vo) throws Exception;
 }

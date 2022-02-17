@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import kr.co.vo.signUpVO;
+import kr.co.vo.logInVO;
 
 @Repository
 public class logInDAOImpl implements logInDAO{
@@ -13,7 +13,7 @@ public class logInDAOImpl implements logInDAO{
 	private SqlSession sql;
 	
 	@Override
-	public signUpVO login(signUpVO vo) throws Exception{
-		return sql.selectOne("creditMSMapper.login", vo);
+	public logInVO login(logInVO vo) throws Exception{
+		return sql.selectOne("MemberMapper.login", vo);
 	}
 }
