@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import { Button, Form, Row, Col, Stack, Table } from "react-bootstrap";
+import axios from 'axios';
 
 class Tables extends Component{
     constructor(props){
@@ -10,59 +11,48 @@ class Tables extends Component{
         }
         this.state = {
             // 검색 state
-            year:"",
-            semester:"",
-            target_grade:"",
-            division:"",
+            year:"전체",
+            semester:"전체",
+            target_grade:"전체",
+            division:"00",
             abeek_bsm : false,
             abeek_liberal_arts: false,
             abeek_tech: false,
             abeek_design: false,
             title:"",
             GP:"A+", // 검색화면에서 등급 선택
-            searchData: [
-                {
-                    course_id:"0000123124",
-                    division_name:"전공선택",
-                    abeek_name1:"공학주제",
-                    abeek_name2:"설계",
-                    title:"병렬분산",
-                    year:"2021",
-                    semester:"2",
-                    credit:"3",
-                    GP:"A+",
-                    // key: 0,
-                    id: 0
-                },
-                {
-                    course_id:"0000123457",
-                    division_name:"전공선택",
-                    abeek_name1:"공학주제",
-                    abeek_name2:"설계",
-                    title:"마이크로프로세서",
-                    year:"2021",
-                    semester:"1",
-                    credit:"3",
-                    GP:"A+",
-                    // key: 1,
-                    id: 1
-                },
-                {
-                    course_id:"0000123458",
-                    division_name:"전공선택",
-                    abeek_name1:"공학주제",
-                    abeek_name2:"설계",
-                    title:"졸프",
-                    year:"2021",
-                    semester:"1",
-                    credit:"3",
-                    GP:"A+",
-                    // key: 1,
-                    id: 2
-                }
-            ]
+        }
+        
+    }
+
+    combineAbeek = (bsm, liberalArts, tech, design) => {
+        var abeekStr = "";
+        if(bsm) {
+            abeekStr = abeekStr + "01|";
+        }
+        if(liberalArts) {
+            abeekStr = abeekStr + "02|";
+        }
+        if(tech) {
+            abeekStr = abeekStr + "03|";
+        }
+        if(design) {
+            abeekStr = abeekStr + "04|";
         }
 
+        abeekStr = "regexp_like(ac.abeek_cd, \'[" + abeekStr.slice(0,-1) + "]\')";
+                
+        if(!bsm && !liberalArts && !tech && !design) {
+            abeekStr = "1=1";
+        }
+
+        return abeekStr;
+    }
+
+    addSearchData = (newData) => {
+        this.setState({
+            searchData: newData
+        }, console.log("addSearchData", this.state.searchData));
     }
 
     handleChange = (e) => {
@@ -84,9 +74,24 @@ class Tables extends Component{
         this.setState({searchData:_searchData});
     }
 
+    handleSearch = async (e) => {
+        e.preventDefault();
+        console.log("search");
+
+        var year = this.state.year==="전체"?"1=1":"s.year=" + this.state.year;
+        var semester = this.state.semester==="전체"?"1=1":"s.semester=" + this.state.semester;
+        var target_grade = this.state.target_grade==="전체"?"1=1":"s.target_grade=" + this.state.target_grade;
+        var division_cd = this.state.division==="00"?"1=1":"s.division_cd=" + this.state.division;
+        var abeekStr = this.combineAbeek(this.state.abeek_bsm, this.state.abeek_liberal_arts, this.state.abeek_tech, this.state.abeek_design);
+        var title = "c.title like \'%" + this.state.title + "%\'"
+        
+        await this.props.postSearchData(year, semester, target_grade, division_cd, abeekStr, title);
+    }
+
     render(){ 
         // null로 해놓고 for문 다 case문 안으로
         // searchData: manage -> tables
+        console.log(this.props.id);
         var data = null;
         var list = [];
         var _content = null;
@@ -176,7 +181,7 @@ class Tables extends Component{
                 var visible = null;
                 if(this.props.pageId === 1) visible = true;
                 else visible = false;
-                _content =  <Form className="border mb-3">
+                _content =  <Form className="border mb-3" onSubmit={this.handleSearch}>
                                 <Row className="my-3">
                                     {visible && <Form.Group as={Col} md={3}>
                                         <Form.Label>연도</Form.Label>
@@ -236,7 +241,7 @@ class Tables extends Component{
                                                 <Form.Control type="text" placeholder="과목명을 입력하세요." onChange={this.handleChange} name="title"></Form.Control>
                                             </Col>    
                                             <Col>
-                                                <Button>검색</Button>   
+                                                <Button type="submit">검색</Button>   
                                             </Col> 
                                         </Row>
                                     </Col>        
@@ -245,15 +250,14 @@ class Tables extends Component{
                 break;
             case 5:
                 data = this.props.data;
-                var searchData = this.state.searchData;
+                var searchData = this.props.searchData;
                 for(let i=0;i<searchData.length;i++) {
-                    let abeekStr = searchData[i].abeek_name1 + "/" + searchData[i].abeek_name2;
                     list.push(
                         <tr key={i}>
                             <td>{searchData[i].course_id}</td>
                             <td>{searchData[i].title}</td>
                             <td>{searchData[i].division_name}</td>
-                            <td>{abeekStr}</td>
+                            <td>{searchData[i].abeek_name}</td>
                             <td>{searchData[i].year}</td>
                             <td>{searchData[i].semester}</td>
                             <td>{searchData[i].credit}</td>

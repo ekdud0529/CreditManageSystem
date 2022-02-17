@@ -56,7 +56,8 @@ class Manage extends Component{
                     // key: 1,
                     id: 1
                 }
-            ]
+            ],
+            searchData: []
         }
     }
 
@@ -201,6 +202,46 @@ class Manage extends Component{
         }.bind(this));
     }
 
+    postSearchData = async (year, semester, target_grade, division_cd, abeekStr, title) => {
+        var newData = [];
+        await axios.post("/manage", {
+            year: year,
+            semester: semester,
+            target_grade: target_grade,
+            division_cd: division_cd,
+            abeekStr: abeekStr,
+            title: title
+        })
+        .catch(function(error) {
+            alert("error");
+        })
+        .then((response) => {
+            console.log(response.data.length);
+            var id = 0;
+
+            for(var i=0;i<response.data.length;i++) {
+                newData.push({
+                    course_id: response.data[i].course_id,
+                    division_name: response.data[i].division_name,
+                    abeek_name: response.data[i].abeek_name,
+                    title: response.data[i].title,
+                    year: response.data[i].year,
+                    semester: response.data[i].semester,
+                    credit: response.data[i].credit,
+                    GP:"",
+                    id: id++
+                    // key: 1,
+                })
+            }
+            // newSearchData에 안들어감아아마암암ㅇㅇ
+            // 1=1일때 어케할건지
+            this.setState({
+                searchData: newData
+            }, console.log("newSearchData", newData))
+            
+        });
+    }
+
     render(){
         var _title = null;
         var _content = null;
@@ -208,8 +249,8 @@ class Manage extends Component{
             case 1:
                 _title = "이수과목관리";
                 var _modalContent = <div>
-                                        <Tables id={4} pageId={this.props.id}></Tables>
-                                        <Tables id={5} data={this.state.data} onAdd={this.onAdd}></Tables>
+                                        <Tables id={4} pageId={this.props.id} postSearchData={this.postSearchData}></Tables>
+                                        <Tables id={5} data={this.state.data} searchData={this.state.searchData} onAdd={this.onAdd}></Tables>
                                     </div>;
                 _content =  <Container className="manage">
                                 <Tables id={1} getCriteria={this.getCriteria} calcCredit={()=>this.calcCredit(this.state.data)} criteria={this.state.criteria}  credit={this.state.credit}></Tables>
@@ -220,8 +261,8 @@ class Manage extends Component{
             case 2:
                 _title = "졸업시뮬레이션";
                 var _modalSearchContent =   <div className="manage">
-                                                <Tables id={4} pageId={this.props.id}></Tables>
-                                                <Tables id={5} data={this.state.data} onAdd={this.onAdd}></Tables>
+                                                <Tables id={4} pageId={this.props.id} postSearchData={this.postSearchData}></Tables>
+                                                <Tables id={5} data={this.state.data} searchData={this.state.searchData} onAdd={this.onAdd}></Tables>
                                             </div>;
                 var _modalResultContent =   <Form className="manage result">
                                                 <Form.Group>
