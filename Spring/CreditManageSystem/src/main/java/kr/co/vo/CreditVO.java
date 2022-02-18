@@ -1,26 +1,10 @@
 package kr.co.vo;
 
 public class CreditVO {
-	private String student_id;
 	private String code;
 	private String name;
 	private int total;
 	
-	public CreditVO() {}
-	
-	public CreditVO(String student_id, String code, String name, int total) {
-		this.student_id = student_id;
-		this.code = code;
-		this.name = name;
-		this.total = total;
-	}
-	
-	public String getStudent_id() {
-		return student_id;
-	}
-	public void setStudent_id(String student_id) {
-		this.student_id = student_id;
-	}
 	public String getCode() {
 		return code;
 	}

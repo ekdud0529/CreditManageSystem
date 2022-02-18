@@ -2,33 +2,34 @@ package kr.co.vo;
 
 public class CriteriaVO {
 	
-	private int admission_year;
-	private String criteria_cd;
-	private int criteria_credit;
-	private String criteria_name;
+	private int admissionYear;
+	private String criteriaCd;
+	private int criteriaCredit;
+	private String criteriaName;
 	
-	public int getAdmission_year() {
-		return admission_year;
+	public int getAdmissionYear() {
+		return admissionYear;
 	}
-	public void setAdmission_year(int admission_year) {
-		this.admission_year = admission_year;
+	public void setAdmissionYear(int admissionYear) {
+		this.admissionYear = admissionYear;
 	}
-	public String getCriteria_cd() {
-		return criteria_cd;
+	public String getCriteriaCd() {
+		return criteriaCd;
 	}
-	public void setCriteria_cd(String criteria_cd) {
-		this.criteria_cd = criteria_cd;
+	public void setCriteriaCd(String criteriaCd) {
+		this.criteriaCd = criteriaCd;
 	}
-	public int getCriteria_credit() {
-		return criteria_credit;
+	public int getCriteriaCredit() {
+		return criteriaCredit;
 	}
-	public void setCriteria_credit(int criteria_credit) {
-		this.criteria_credit = criteria_credit;
+	public void setCriteriaCredit(int criteriaCredit) {
+		this.criteriaCredit = criteriaCredit;
 	}
-	public String getCriteria_name() {
-		return criteria_name;
+	public String getCriteriaName() {
+		return criteriaName;
 	}
-	public void setCriteria_name(String criteria_name) {
-		this.criteria_name = criteria_name;
+	public void setCriteriaName(String criteriaName) {
+		this.criteriaName = criteriaName;
 	}
+
 }

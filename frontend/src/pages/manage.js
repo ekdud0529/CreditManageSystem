@@ -15,6 +15,7 @@ class Manage extends Component{
             isOpenResultModal : false,
             criteria:[],
             credit:[],
+            GPA:0,
             data : [
                 {
                     course_id:"0000123123",
@@ -100,8 +101,8 @@ class Manage extends Component{
         this.setState({data: list});
     }
 
-    getCriteria = () => {
-        axios.post("/criteria",{admission_year:2018})
+    getCriteria = (admissionYear) => {
+        axios.post("/criteria",{admissionYear:admissionYear})
         .then(function(response){
             let criteriaData = response.data;
             console.log(criteriaData);
@@ -109,12 +110,20 @@ class Manage extends Component{
         }.bind(this));
     }
 
-    getCredit = () => {
-        axios.post("/credit",{student_id:"201819186"})
+    getCredit = (studentId) => {
+        axios.post("/credit",{studentId:studentId})
         .then(function(response){
             let creditData = response.data; 
             console.log(creditData);
             this.setState({credit : creditData});
+        }.bind(this));
+    }
+
+    getGPA = (studentId) => {
+        axios.post("/gpa",{studentId:studentId})
+        .then(function(response){
+            console.log(response.data);
+            this.setState({GPA : response.data});
         }.bind(this));
     }
 
@@ -169,7 +178,7 @@ class Manage extends Component{
                                         <Tables id={5} data={this.state.data} searchData={this.state.searchData} onAdd={this.onAdd}></Tables>
                                     </div>;
                 _content =  <Container className="manage">
-                                <Tables id={1} getCriteria={this.getCriteria} getCredit={this.getCredit} criteria={this.state.criteria}  credit={this.state.credit}></Tables>
+                                <Tables id={1} getCriteria={()=>this.getCriteria(2018)} getCredit={()=>this.getCredit("201819186")} criteria={this.state.criteria}  credit={this.state.credit}></Tables>
                                 <Tables id={2} onOpenSearchModal={()=>this.openModal(1)} data={this.state.data} onDelete={this.onDelete}></Tables>
                                 <CustomModal dialogClassName="modal-w90" title="과목 검색" content={_modalContent} show={this.state.isOpenSearchModal} onHide={()=>this.closeModal(1)}></CustomModal>
                             </Container>;
@@ -183,7 +192,7 @@ class Manage extends Component{
                 var _modalResultContent =   <Form className="manage result">
                                                 <Form.Group>
                                                     <Form.Label>이수현황</Form.Label>
-                                                    <Tables id={1} getCriteria={this.getCriteria} getCredit={this.getCredit} criteria={this.state.criteria} credit={this.state.credit}></Tables>
+                                                    <Tables id={1} getCriteria={()=>this.getCriteria(2018)} getCredit={()=>this.getCredit("201819186")} criteria={this.state.criteria} credit={this.state.credit}></Tables>
                                                 </Form.Group>
                                                 <Form.Group>
                                                     <Form.Label>선후수 만족 여부</Form.Label>
@@ -191,7 +200,7 @@ class Manage extends Component{
                                                 </Form.Group>
                                                 <Form.Group>
                                                     <Form.Label>평점</Form.Label>
-                                                    <Tables id={7}></Tables>
+                                                    <Tables id={7} getGPA={()=>this.getGPA("201819186")} GPA={this.state.GPA}></Tables>
                                                 </Form.Group>
                                             </Form>;
                 _content =  <Container className="manage">

@@ -4,10 +4,20 @@ import { Button, Form, Row, Col, Stack, Table } from "react-bootstrap";
 class Tables extends Component{
     constructor(props){
         super(props);
-        if(this.props.id===1){
-            this.props.getCriteria();
-            this.props.getCredit();
+        switch(this.props.id){
+            case 1:
+                this.props.getCriteria();
+                this.props.getCredit();
+                break;
+            case 7:
+                this.props.getGPA();
+                break;
+            default: break;
         }
+        // if(this.props.id===1){
+        //     this.props.getCriteria();
+        //     this.props.getCredit();
+        // }
         this.state = {
             // 검색 state
             year:"전체",
@@ -118,15 +128,15 @@ class Tables extends Component{
                                 </thead>
                                 <tbody>
                                     <tr>
-                                    <td>{this.props.credit[1].total}/{this.props.criteria[1].criteria_credit}({this.props.criteria[5].criteria_credit})</td>
-                                        <td>{this.props.credit[6].total}/{this.props.criteria[7].criteria_credit}</td>
-                                        <td>{this.props.credit[7].total}/{this.props.criteria[8].criteria_credit}</td>
-                                        <td>{this.props.credit[8].total}</td>
-                                        <td>{this.props.credit[0].total}/{this.props.criteria[0].criteria_credit}</td>
-                                        <td>{this.props.credit[11].total}/{this.props.criteria[9].criteria_credit}</td>
-                                        <td>{this.props.credit[12].total}/{this.props.criteria[10].criteria_credit}</td>
-                                        <td>{this.props.credit[13].total}/{this.props.criteria[11].criteria_credit}</td>
-                                        <td>{this.props.credit[17].total}/{this.props.criteria[12].criteria_credit}</td>                                        
+                                    <td>{this.props.credit[1].total}/{this.props.criteria[1].criteriaCredit}({this.props.criteria[5].criteriaCredit})</td>
+                                        <td>{this.props.credit[7].total}/{this.props.criteria[7].criteriaCredit}</td>
+                                        <td>{this.props.credit[8].total}/{this.props.criteria[8].criteriaCredit}</td>
+                                        <td>{this.props.credit[9].total}</td>
+                                        <td>{this.props.credit[0].total}/{this.props.criteria[0].criteriaCredit}</td>
+                                        <td>{this.props.credit[12].total}/{this.props.criteria[9].criteriaCredit}</td>
+                                        <td>{this.props.credit[13].total}/{this.props.criteria[10].criteriaCredit}</td>
+                                        <td>{this.props.credit[14].total}/{this.props.criteria[11].criteriaCredit}</td>
+                                        <td>{this.props.credit[18].total}/{this.props.criteria[12].criteriaCredit}</td>                                        
                                     </tr>
                                 </tbody>
                             </Table>;
@@ -335,7 +345,7 @@ class Tables extends Component{
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>4.0</td>
+                                        <td>{this.props.GPA}</td>
                                         <td>4.2</td>
                                     </tr>
                                 </tbody>

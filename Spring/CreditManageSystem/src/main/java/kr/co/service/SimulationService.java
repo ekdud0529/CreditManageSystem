@@ -11,5 +11,8 @@ public interface SimulationService {
 	
 	//√ÎµÊ«–¡°
 	public List<CreditVO> credit(String studentId) throws Exception;
+	
+	//∆Ú±’∆Ú¡°
+	public float gpa(String studentId) throws Exception;
 
 }

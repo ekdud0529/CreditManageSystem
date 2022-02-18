@@ -27,5 +27,10 @@ public class SimulationDAOImpl implements SimulationDAO{
 	public List<CreditVO> credit(String studentId) throws Exception {
 		return sqlSession.selectList("SimulationMapper.credit", studentId);
 	}
-	
+
+	//∆Ú±’∆Ú¡°
+	@Override
+	public float gpa(String studentId) throws Exception {
+		return sqlSession.selectOne("SimulationMapper.gpa", studentId);
+	}
 }
