@@ -199,7 +199,7 @@ class Manage extends Component{
                                                     <Tables id={6}></Tables>
                                                 </Form.Group>
                                                 <Form.Group>
-                                                    <Form.Label>평점</Form.Label>
+                                                    <Form.Label>평균 평점</Form.Label>
                                                     <Tables id={7} getGPA={()=>this.getGPA("201819186")} GPA={this.state.GPA}></Tables>
                                                 </Form.Group>
                                             </Form>;

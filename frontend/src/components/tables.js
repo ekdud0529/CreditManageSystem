@@ -14,10 +14,7 @@ class Tables extends Component{
                 break;
             default: break;
         }
-        // if(this.props.id===1){
-        //     this.props.getCriteria();
-        //     this.props.getCredit();
-        // }
+        
         this.state = {
             // 검색 state
             year:"전체",
