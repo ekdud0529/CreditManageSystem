@@ -3,21 +3,13 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="creditMSMapper">
-   <!-- 회원가입 정보 저장 -->
-   <insert id = "register">
-		INSERT INTO STUDENT_TEST(STUDENT_ID
-								, NAME
-								, PW)
-					VALUES(		#{studentId}
-								, #{name}
-								, #{password})
-	</insert>
 
-	<select id = "search" resultType="kr.co.vo.ManageVO" parameterType="kr.co.vo.SearchVO">
+  <select id = "search" resultType="kr.co.vo.ManageVO" parameterType="kr.co.vo.SearchVO">
 		select s.year, s.semester, s.target_grade, c.course_id, c.title, s.division_cd, d.division_name, c.credit, max(a.abeek_cd) as abeek_cd1, min(a.abeek_cd) as abeek_cd2, max(a.abeek_credit) as abeek_credit2, min(a.abeek_credit) as abeek_credit1, count(ac.abeek_name) as cnt, listagg(ac.abeek_name, ',') within group (order by ac.abeek_name) as abeek_name
 		from course c, section s, abeek a, abeek_code ac, division d
 		where c.course_id = s.course_id and a.course_id=c.course_id and a.abeek_cd = ac.abeek_cd and s.division_cd=d.division_cd and ${year} and ${semester} and ${target_grade} and ${division_cd} and ${abeekStr} and ${title}
 		group by c.course_id, s.year, s.semester, s.target_grade, c.title, s.division_cd, d.division_name, c.credit
 		order by s.year, s.semester, s.target_grade
 	</select>
+	
 </mapper>

@@ -21,20 +21,19 @@ class SignUp extends Component{
 		this.setState({
 			[e.target.name]: e.target.value
 		});
-		
-		console.log(e.target.name);
-		console.log(e.target.value);
 	}
 
 	handleSubmit = (e) => {
+		e.preventDefault();
+
 		// 입력 여부 확인
 		const form = e.currentTarget;
 		if (form.checkValidity() === false){
-			e.preventDefault(); //제출 시 새로고침 방지
-			e.stopPropagation();
+			// e.preventDefault(); // 제출 시 새로고침 방지
+			e.stopPropagation();  // 이벤트 전파 중단
 		}
 		this.setState({validated: true});
-		
+
 		// 비밀번호 확인
 		if(this.state.password === this.state.checkPassword)
 		{
@@ -45,17 +44,16 @@ class SignUp extends Component{
 							name: this.state.studentName,
 							password: this.state.password
 						})
-						.catch(function(error){
-							alert("이미 존재하는 학번입니다.");
-						})
-						// then -> post 후 과정
-						.then(function(response){ // response -> 스프링에서 받아온 데이터
-							console.log(response.date); //-> 데이터를 사용하기 위해선 뒤에 .data 붙여야함
+						.then((response) => {
 							alert("회원가입 성공");
+							window.location.href="/logIn";
+						})
+						.catch(function(error) {
+							alert("회원가입에 실패했습니다.");
 						});
 			}
 			else
-				alert("회원가입 실패");	
+				alert("모두 작성해 주세요.");	
 		}
 		else
 		{

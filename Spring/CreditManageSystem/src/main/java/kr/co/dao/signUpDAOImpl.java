@@ -14,6 +14,6 @@ public class signUpDAOImpl implements signUpDAO{
 
 	@Override
 	public void register(signUpVO vo) throws Exception {
-		sql.insert("creditMSMapper.register", vo);
+		sql.insert("MemberMapper.register", vo);
 	}
 }

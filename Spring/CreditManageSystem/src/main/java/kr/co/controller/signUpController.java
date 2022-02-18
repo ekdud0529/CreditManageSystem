@@ -26,7 +26,7 @@ public class signUpController {
 	// 회원가입 데이터 post
 	@CrossOrigin
 	@RequestMapping(value="/signUp", method = RequestMethod.POST)
-	public String postRegister(@RequestBody signUpVO vo) throws Exception{
+	public void postRegister(@RequestBody signUpVO vo) throws Exception{
 		Logger.info("post register");
 		
 		System.out.println("id : " + vo.getStudentId());
@@ -34,6 +34,5 @@ public class signUpController {
 		System.out.println("name : " + vo.getName());
 		
 		service.register(vo);
-		return "redirect:/";
 	}
 }
