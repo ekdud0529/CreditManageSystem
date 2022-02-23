@@ -48,6 +48,7 @@ class LogIn extends Component{
 				if(id === this.state.studentId && pw === this.state.password)
 				{
 					window.location.href="/";
+					window.localStorage.setItem("loginSuccess", "success");
 				}
 				else alert("아이디 또는 비밀번호가 틀렸습니다.");
 			});

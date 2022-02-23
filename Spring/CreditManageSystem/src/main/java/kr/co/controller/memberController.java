@@ -45,21 +45,33 @@ public class memberController {
 	public memberVO login(@RequestBody memberVO vo, HttpServletRequest request, HttpSession session) throws Exception{
 		Logger.info("post login");
 		
+		session = request.getSession();
+		
 		memberVO login = service.logIn(vo);
 		
+		System.out.println("--POST--");
 		System.out.println(vo.getStudentId());
 		System.out.println(vo.getPassword());
-		System.out.println("\n\n");
+		System.out.println("--DB--");
 		System.out.println(login.getStudentId());
 		System.out.println(login.getPassword());
 		
-		if(login.getStudentId() == vo.getStudentId()
-		&& login.getPassword() == vo.getPassword())
+		if((login.getStudentId().equals(vo.getStudentId()))
+		&& (login.getPassword().equals(vo.getPassword())))
 		{
-			session.setAttribute("studentId", vo.getStudentId());
-			session.setAttribute("password", vo.getPassword());
+			session.setAttribute("member", login);
+			System.out.println("--session--");
+			memberVO isLogIn = (memberVO) session.getAttribute("member");
+			System.out.println(isLogIn.getStudentId());
+			System.out.println(isLogIn.getPassword());
 		}
-		
+		else session.setAttribute("member", null);
 		return login;
+	}
+	
+	// ·Î±×¾Æ¿ô
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public void logout(HttpSession session) throws Exception{
+		session.invalidate();
 	}
 }
