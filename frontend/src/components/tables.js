@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { Button, Form, Row, Col, Stack, Table } from "react-bootstrap";
+import { Button, Form, Row, Col, Stack, Table, OverlayTrigger, Tooltip } from "react-bootstrap";
 
 class Tables extends Component{
     constructor(props){
@@ -321,13 +321,39 @@ class Tables extends Component{
                                 <tbody>
                                     <tr>
                                         <td>디지털논리설계</td>
-                                        <td className="red">논리회로설계</td>
-                                        <td className="red">불만족</td>
+                                        <td>논리회로설계</td>
+                                        <td>
+                                            <OverlayTrigger placement="top" overlay={<Tooltip>선수과목을 미이수했습니다. 이수능력확인서가 필요합니다.</Tooltip>}>
+                                                <text class="red">불만족</text>
+                                            </OverlayTrigger>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>객체지향설계</td>
+                                        <td>창의적IT공학설계입문</td>
+                                        <td>
+                                            <OverlayTrigger placement="top" overlay={<Tooltip>후수과목을 선수과목보다 먼저 이수했습니다. 이수능력확인서가 필요합니다.</Tooltip>}>
+                                                <text class="red">불만족</text>
+                                            </OverlayTrigger>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>창의적IT공학설계입문</td>
                                         <td>논리회로설계</td>
-                                        <td className="green">만족</td>
+                                        <td>
+                                            <OverlayTrigger placement="top" overlay={<Tooltip>후수과목을 미이수했습니다.</Tooltip>}>
+                                                <text class="green">만족</text>
+                                            </OverlayTrigger>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>컴퓨터구조</td>
+                                        <td>컴퓨터구조설계</td>
+                                        <td>
+                                            <OverlayTrigger placement="top" overlay={<Tooltip>선수과목과 후수과목을 모두 이수했습니다.</Tooltip>}>
+                                                <text class="green">만족</text>
+                                            </OverlayTrigger>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </Table>;

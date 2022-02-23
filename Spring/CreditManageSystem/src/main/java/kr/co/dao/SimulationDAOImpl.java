@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.vo.CreditVO;
 import kr.co.vo.CriteriaVO;
+import kr.co.vo.OrderVO;
 
 @Repository
 public class SimulationDAOImpl implements SimulationDAO{
@@ -32,5 +33,11 @@ public class SimulationDAOImpl implements SimulationDAO{
 	@Override
 	public float gpa(String studentId) throws Exception {
 		return sqlSession.selectOne("SimulationMapper.gpa", studentId);
+	}
+
+	//선후수체계
+	@Override
+	public List<OrderVO> order(int year) throws Exception {
+		return sqlSession.selectList("SimulationMapper.order", year);
 	}
 }

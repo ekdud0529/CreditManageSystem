@@ -43,4 +43,11 @@
 		from takes_test t, score sc
 		where student_id = #{studentId} and t.gp = sc.gp
 	</select>
+	
+	<!-- 선후수체계 -->
+	<select id="order" parameterType="int" resultType="kr.co.vo.OrderVO">
+		select p.pre_course_id preCourseId, pc.title preTitle, p.course_id courseId, c.title, p.start_year startYear, p.end_year endYear
+			from pre_course p, course c, course pc
+			where #{year} between start_year and end_year and p.pre_course_id = pc.course_id and p.course_id = c.course_id
+	</select>
 </mapper>
