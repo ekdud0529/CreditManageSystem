@@ -1,6 +1,6 @@
 package kr.co.vo;
 
-public class signUpVO {
+public class memberVO {
 
 	private	String studentId;
 	private String name;

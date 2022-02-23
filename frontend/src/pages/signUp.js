@@ -44,12 +44,12 @@ class SignUp extends Component{
 							name: this.state.studentName,
 							password: this.state.password
 						})
+						.catch(function(error) {
+							alert("회원가입에 실패했습니다.");
+						})
 						.then((response) => {
 							alert("회원가입 성공");
 							window.location.href="/logIn";
-						})
-						.catch(function(error) {
-							alert("회원가입에 실패했습니다.");
 						});
 			}
 			else

@@ -28,7 +28,7 @@ import kr.co.vo.CreditVO;
 import kr.co.vo.CriteriaVO;
 import kr.co.vo.ManageVO;
 import kr.co.vo.OrderVO;
-import kr.co.vo.signUpVO;
+import kr.co.vo.memberVO;
 
 @Controller
 @RequestMapping("/")
@@ -49,7 +49,7 @@ public class SimulationController {
 	//√ÎµÊ«–¡°
 	@RequestMapping(value="credit", method=RequestMethod.POST)
 	@ResponseBody
-	public List<CreditVO> credit(@RequestBody signUpVO vo) throws Exception{
+	public List<CreditVO> credit(@RequestBody memberVO vo) throws Exception{
 		logger.info("credit");
 		return service.credit(vo.getStudentId());
 	}
@@ -57,7 +57,7 @@ public class SimulationController {
 	//∆Ú±’∆Ú¡°
 	@RequestMapping(value="gpa", method=RequestMethod.POST)
 	@ResponseBody
-	public float gpa(@RequestBody signUpVO vo) throws Exception{
+	public float gpa(@RequestBody memberVO vo) throws Exception{
 		logger.info("gpa");
 		return service.gpa(vo.getStudentId());
 	}
