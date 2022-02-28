@@ -39,23 +39,23 @@
 		   on dv.course_id = ab.course_id
 		   where 
 		   <choose>
-				<when test="year != '전체'">s.year=${year}</when>
+				<when test="year != '전체'">year=${year}</when>
 				<otherwise>1=1</otherwise>
 			</choose>
 			<choose>
-				<when test="semester != '전체'"> and s.semester=${semester}</when>
+				<when test="semester != '전체'"> and semester=${semester}</when>
 				<otherwise> and 1=1</otherwise>
 			</choose>
 			<choose>
-				<when test="target_grade != '전체'"> and s.target_grade=${target_grade}</when>
+				<when test="target_grade != '전체'"> and target_grade=${target_grade}</when>
 				<otherwise> and 1=1</otherwise>
 			</choose>
 			<choose>
-				<when test="division_cd != '0000'"> and s.division_cd like '%${division_cd}%'</when>
+				<when test="division_cd != '0000'"> and division_cd like '%${division_cd}%'</when>
 				<otherwise> and 1=1</otherwise>
 			</choose>
 			<choose>
-				<when test="title != ''">and c.title like '%${title}%'</when>
+				<when test="title != ''">and dv.title like '%${title}%'</when>
 				<otherwise> and 1=1</otherwise>
 			</choose>
 			<choose>
