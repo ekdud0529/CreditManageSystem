@@ -1,0 +1,16 @@
+.modal-w90{
+    width: 90%;
+    max-width: none !important;
+}
+
+.manage .form-label{
+    font-weight: bold;
+}
+
+.manage .form-check-label{
+    font-weight: normal
+}
+
+.result .form-label{
+    font-size: large;
+}

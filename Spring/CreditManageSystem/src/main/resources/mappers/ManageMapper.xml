@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ManageMapper">
+	<!-- 과목검색 -->
+	<select id = "search" resultType="kr.co.vo.ManageVO" parameterType="kr.co.vo.ManageVO">
+		select dv.year, dv.semester, dv.target_grade, dv.course_id, dv.title, dv.division_cd, dv.division_name, dv.credit, ab.abeek_cd1, ab.abeek_name1, ab.abeek_credit1, ab.abeek_cd2, ab.abeek_name2, ab.abeek_credit2, case when abeek_cd2 is null then abeek_name1 else (abeek_name1||', '||abeek_name2) end abeek_name
+		   from
+		      (select s.year, s.semester, s.target_grade, s.course_id, s.division_cd, d.division_name, c.title, c.credit 
+		         from section s, course c, division d
+		         where s.course_id = c.course_id and s.division_cd = d.division_cd) dv
+		   left outer join
+		      (select cd.course_id, cd.title, cd.abeek_cd1, nm.abeek_name1, nm.abeek_credit1, cd.abeek_cd2 , nm.abeek_name2, nm.abeek_credit2
+		         from 
+		            (select a.course_id, a.title, min(a.abeek_cd) abeek_cd1, nullif(max(b.abeek_cd), min(a.abeek_cd)) abeek_cd2
+		               from
+		                  (select c.course_id, c.title, a.abeek_cd, a.abeek_credit 
+		                     from course c, abeek a
+		                     where c.course_id = a.course_id) a
+		               inner join
+		                  (select c.course_id, c.title, a.abeek_cd, a.abeek_credit 
+		                  from course c, abeek a
+		                  where c.course_id = a.course_id) b
+		               on a.course_id = b.course_id
+		               group by a.course_id, a.title) cd
+		         left outer join
+		            (select a.course_id, a.abeek_cd abeek_cd1, a.abeek_credit abeek_credit1, a.abeek_name abeek_name1, nullif(b.abeek_cd, a.abeek_cd) abeek_cd2, case when b.abeek_cd = a.abeek_cd then null else b.abeek_credit end abeek_credit2, nullif(b.abeek_name, a.abeek_name) abeek_name2 
+		               from
+		                  (select a.course_id, a.abeek_cd, a.abeek_credit, ac.abeek_name 
+		                     from abeek a, abeek_code ac
+		                     where a.abeek_cd = ac.abeek_cd) a
+		               inner join
+		                  (select a.course_id, a.abeek_cd, a.abeek_credit, ac.abeek_name 
+		                     from abeek a, abeek_code ac
+		                     where a.abeek_cd = ac.abeek_cd) b
+		               on a.course_id = b.course_id) nm
+		         on cd.course_id = nm.course_id and cd.abeek_cd1 = nm.abeek_cd1 and (cd.abeek_cd2 is null or cd.abeek_cd2 = nm.abeek_cd2)) ab
+		   on dv.course_id = ab.course_id
+		   where 
+		   <choose>
+				<when test="year != '전체'">year=${year}</when>
+				<otherwise>1=1</otherwise>
+			</choose>
+			<choose>
+				<when test="semester != '전체'"> and semester=${semester}</when>
+				<otherwise> and 1=1</otherwise>
+			</choose>
+			<choose>
+				<when test="target_grade != '전체'"> and target_grade=${target_grade}</when>
+				<otherwise> and 1=1</otherwise>
+			</choose>
+			<choose>
+				<when test="division_cd != '0000'"> and division_cd like '%${division_cd}%'</when>
+				<otherwise> and 1=1</otherwise>
+			</choose>
+			<choose>
+				<when test="title != ''">and dv.title like '%${title}%'</when>
+				<otherwise> and 1=1</otherwise>
+			</choose>
+			<choose>
+				<when test="abeekStr != ''"> and (regexp_like(abeek_cd1, #{abeekStr}) or regexp_like(abeek_cd2, #{abeekStr}))</when>
+				<otherwise>and 1=1</otherwise>
+			</choose>
+		   order by year, semester, target_grade, course_id
+	</select>
+	
+	<select id="getTakes" resultType="kr.co.vo.ManageVO">
+		select lt.year, lt.semester, lt.target_grade, lt.course_id, lt.title, lt.division_cd, lt.division_name, lt.credit, lt.gp, lt.student_id, listagg(rt.abeek_name, ',') within group(order by rt.abeek_name) as abeek_name from
+		(select s.year, s.semester, s.target_grade, s.course_id, c.title, s.division_cd, d.division_name, c.credit, t.student_id, t.gp
+		from course c, section s, division d, takes_test t where s.course_id = c.course_id and s.division_cd=d.division_cd and t.student_id='201912352' and t.course_id=s.course_id and t.year=s.year and t.semester=s.semester and t.target_grade=s.target_grade) lt
+		left outer join
+		(select s.year, s.semester, c.course_id, c.title, s.target_grade, s.division_cd, d.division_name, c.credit, a.abeek_cd, ac.abeek_name, a.abeek_credit
+		from course c, section s, division d, abeek_code ac, abeek a
+		where c.course_id = s.course_id and s.division_cd=d.division_cd and a.abeek_cd=ac.abeek_cd and s.course_id=a.course_id) rt
+		on lt.year=rt.year and lt.semester=rt.semester and lt.course_id=rt.course_id
+		group by lt.year, lt.semester, lt.target_grade, lt.course_id, lt.title, lt.division_cd, lt.division_name, lt.credit, lt.gp, lt.student_id
+	</select>
+	
+	<insert id="insertTakes" parameterType="java.util.List">
+		insert into takes_test
+			<foreach item="item" separator=" union all " collection="list">
+			(
+			select s.year, s.semester, s.course_id, s.target_grade, '201912352', #{item.gp}
+			from section s, course c
+			where c.course_id=s.course_id and s.course_id=#{item.course_id} and s.year=${item.year} and s.semester=${item.semester}
+			)
+			</foreach>
+	</insert>
+	
+	<delete id="deleteTakes" parameterType="java.util.List">
+		delete from takes_test where student_id='201912352' and
+		<foreach item="item" separator=" or " collection="list">
+			(course_id=#{item.course_id} and year=${item.year} and semester=${item.semester})
+		</foreach>
+	</delete>
+</mapper>

@@ -1,0 +1,12 @@
+.login.container{
+	width: 350px;
+}
+
+.login .form-label{
+	font-weight: bold;
+}
+
+.signUpMove{
+	text-align: center;
+}
+
