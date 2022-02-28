@@ -14,49 +14,10 @@ class Manage extends Component{
             isOpenSearchModal : false,
             isOpenResultModal : false,
             criteria:[],
-            credit:{  
-                        bl:0,   //기초교양
-                        kl:0,   //핵심교양
-                        gl:0,   //일반교양
-                        tl:0,   //교양총합
-                        rm:0,   //전필
-                        em:0,   //전선
-                        ge:0,   //일선
-                        cr:0,   //공필
-                        total:0,
-                        sl:0,   //전문교양
-                        bsm:0,
-                        eg:0,   //공학주제
-                        ds:0    //설계                      
-                    },
-            data : [ // 리스트
-            //     {
-            //         course_id:"0000123123",
-            //         division_name:"전공선택",
-            //         abeek_name1:"공학주제",
-            //         abeek_name2:"설계",
-            //         title:"영상처리",
-            //         year:"2021",
-            //         semester:"1",
-            //         credit:"3",
-            //         GP:"A+",
-            //         // key: 0,
-            //         id: 0
-            //     },
-            //     {
-            //         course_id:"0000123456",
-            //         division_name:"전공선택",
-            //         abeek_name1:"공학주제",
-            //         abeek_name2:"설계",
-            //         title:"데이터베이스",
-            //         year:"2021",
-            //         semester:"2",
-            //         credit:"3",
-            //         GP:"A+",
-            //         // key: 1,
-            //         id: 1
-            //     }
-            ],
+            credit:[],
+            GPA:0,
+            order:[],
+            data : [],
             searchData: []
         }
     }
@@ -100,8 +61,6 @@ class Manage extends Component{
         }
         newData.id = _id;
         _data.push(newData);
-        this.setState({ data:_data }, console.log("data", this.state.data));
-        this.calcCredit(_data);
     }
 
     onDelete = (_id) => {
@@ -115,7 +74,6 @@ class Manage extends Component{
         }
         console.log(list);
         this.setState({data: list});
-        this.calcCredit(list);
     }
 
     onSave = () => { // 리스트 보내고 업데이트된 takes 받기
@@ -142,117 +100,42 @@ class Manage extends Component{
         .then((response) => {
             console.log("onSave", this.state.data);
         })
-        // let _origin = this.state.takes;
-        // let _data = this.state.data;
-        // let insert = [];
-        // let remove = [];
-        // for(var i = 0;i<_data.length;i++){
-        //     var _new = true;
-        //     for(var j = 0;j<_origin.length;j++){
-        //         if(_data[i].course_id === _origin[j].course_id && _data[i].year === _origin[j].year && _data[i].semester === _origin[j].semester){
-        //             _new = false;
-        //         }
-        //     }
-        //     if(_new) insert.push(_data[i]);
-        // }
-        // for(var k = 0;k<_origin.length;k++){
-        //     var _deleted = true;
-        //     for(var l = 0;l<_data.length;l++){
-        //         if(_origin[k].course_id === _data[l].course_id && _origin[k].year === _data[l].year && _origin[k].semester === _data[l].semester){
-        //             _deleted = false;
-        //         }
-        //     }
-        //     if(_deleted) remove.push(_origin[k]);
-        // }
-        // console.log("data", _data, "origin", this.state.takes);
-        // console.log("insert", insert);
-        // console.log("remove", remove);
-    }
-
-    calcCredit = (data) => {
-        let _data = data;
-        let credit = {  
-                        bl:0,   //기초교양
-                        kl:0,   //핵심교양
-                        gl:0,   //일반교양
-                        tl:0,   //교양총합
-                        rm:0,   //전필
-                        em:0,   //전선
-                        ge:0,   //일선
-                        cr:0,   //공필
-                        total:0,
-                        sl:0,   //전문교양
-                        bsm:0,
-                        eg:0,   //공학주제
-                        ds:0    //설계                      
-                    };
-        for(let i = 0;i<_data.length;i++){
-            switch(_data[i].division_name){
-                case "기초교양":
-                    credit.bl += 3;
-                    break;
-                case "핵심교양":
-                    credit.kl += 3;
-                    break;
-                case "일반교양":
-                    credit.gl += 3;
-                    break;
-                case "전공필수":
-                    credit.rm += 3;
-                    break;
-                case "전공선택":
-                    credit.em += 3;
-                    break;
-                case "일반선택":
-                    credit.ge += 3;
-                    break;
-                case "공통필수":
-                    credit.cr += 0.5;
-                    break;
-                default:break;
-            }
-            switch(_data[i].abeek_name1){
-                case "전문교양":
-                    credit.sl += 3;
-                    break;
-                case "BSM":
-                    credit.bsm += 3;
-                    break;
-                case "공학주제":
-                    credit.eg += 3;
-                    break;
-                case "설계":
-                    credit.ds += 1;
-                    break;
-                default:break;
-            }
-            switch(_data[i].abeek_name2){
-                case "전문교양":
-                    credit.sl++;
-                    break;
-                case "BSM":
-                    credit.bsm++;
-                    break;
-                case "공학주제":
-                    credit.eg++;
-                    break;
-                case "설계":
-                    credit.ds++;
-                    break;
-                default:break;
-            }
-        }
-        credit.tl = credit.bl + credit.kl + credit.gl;
-        credit.total = credit.tl + credit.rm + credit.em + credit.ge + credit.cr;
-        this.setState({credit:credit});
     }
 
     getCriteria = () => {
-        axios.post("/criteria",{admission_year:2018})
+        axios.post("/criteria")
         .then(function(response){
-            var criteriaData = response.data;
+            let criteriaData = response.data;
+            console.log(criteriaData);
             this.setState({criteria : criteriaData});
         }.bind(this));    
+    }
+
+    getCredit = () => {
+        axios.post("/credit")
+        .then(function(response){
+            let creditData = response.data; 
+            console.log(creditData);
+            this.setState({credit : creditData});
+        }.bind(this));
+    }
+
+    getGPA = () => {
+        axios.post("/gpa")
+        .then(function(response){
+            console.log(response.data);
+            this.setState({GPA : response.data});
+        }.bind(this));
+    }
+
+    getOrderSatisfy = () => {
+        let dataList = this.state.data;
+        console.log(dataList);
+        axios.post("/order",dataList)
+        .then(function(response){
+            console.log(response.data);
+            this.setState({order : response.data});
+        }.bind(this));
     }
 
     postSearchData = async (year, semester, target_grade, division_cd, title, abeek_bsm, abeek_liberal_arts, abeek_tech, abeek_design) => {
@@ -336,8 +219,8 @@ class Manage extends Component{
                                         <Tables id={5} data={this.state.data} searchData={this.state.searchData} onAdd={this.onAdd}></Tables>
                                     </div>;
                 _content =  <Container className="manage">
-                                <Tables id={1} getCriteria={this.getCriteria} calcCredit={()=>this.calcCredit(this.state.data)} criteria={this.state.criteria}  credit={this.state.credit}></Tables>
-                                <Tables id={2} onOpenSearchModal={()=>this.openModal(1)} data={this.state.data} onDelete={this.onDelete} getTakes={this.getTakes} onSave={this.onSave}></Tables>
+                                <Tables id={1} getCriteria={this.getCriteria} getCredit={this.getCredit} criteria={this.state.criteria}  credit={this.state.credit}></Tables>
+                                <Tables id={2} onOpenSearchModal={()=>this.openModal(1)} data={this.state.data} onDelete={this.onDelete}></Tables>
                                 <CustomModal dialogClassName="modal-w90" title="과목 검색" content={_modalContent} show={this.state.isOpenSearchModal} onHide={()=>this.closeModal(1)}></CustomModal>
                             </Container>;
                 break;
@@ -350,15 +233,15 @@ class Manage extends Component{
                 var _modalResultContent =   <Form className="manage result">
                                                 <Form.Group>
                                                     <Form.Label>이수현황</Form.Label>
-                                                    <Tables id={1} getCriteria={this.getCriteria} calcCredit={()=>this.calcCredit(this.state.data)} criteria={this.state.criteria} credit={this.state.credit}></Tables>
+                                                    <Tables id={1} getCriteria={this.getCriteria} getCredit={this.getCredit} criteria={this.state.criteria} credit={this.state.credit}></Tables>
                                                 </Form.Group>
                                                 <Form.Group>
                                                     <Form.Label>선후수 만족 여부</Form.Label>
-                                                    <Tables id={6}></Tables>
+                                                    <Tables id={6} getOrderSatisfy={this.getOrderSatisfy} order={this.state.order}></Tables>
                                                 </Form.Group>
                                                 <Form.Group>
-                                                    <Form.Label>평점</Form.Label>
-                                                    <Tables id={7}></Tables>
+                                                    <Form.Label>평균 평점</Form.Label>
+                                                    <Tables id={7} getGPA={this.getGPA} GPA={this.state.GPA}></Tables>
                                                 </Form.Group>
                                             </Form>;
                 _content =  <Container className="manage">

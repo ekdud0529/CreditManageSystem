@@ -1,15 +1,27 @@
 import React, {Component} from "react";
-import { Button, Form, Row, Col, Stack, Table } from "react-bootstrap";
+import { Button, Form, Row, Col, Stack, Table, OverlayTrigger, Tooltip } from "react-bootstrap";
 
 class Tables extends Component{
     constructor(props){
         super(props);
-        if(this.props.id===1){
-            this.props.getCriteria();
-            this.props.calcCredit();
-        } else if(this.props.id === 2 || this.props.id === 3) {
-            this.props.getTakes();
+        switch(this.props.id){
+            case 1:
+                this.props.getCriteria();
+                this.props.getCredit();
+                break;
+            case 2:
+            case 3:
+                this.props.getTakes();
+                break;
+            case 6:
+                this.props.getOrderSatisfy();
+                break;
+            case 7:
+                this.props.getGPA();
+                break;
+            default: break;
         }
+        
         this.state = {
             // 검색 state
             year:"전체",
@@ -100,7 +112,7 @@ class Tables extends Component{
         var _button = this.props.id===2?<Button onClick={this.props.onSave}>저장</Button>:<Button onClick={this.props.onOpenResultModal}>결과</Button>
         switch(this.props.id){
             case 1:
-                _content =  this.props.criteria.length === 0?null:
+                _content =  this.props.criteria.length === 0 || this.props.credit.length === 0?null:
                             <Table bordered>
                                 <thead>
                                     <tr>
@@ -108,28 +120,28 @@ class Tables extends Component{
                                         <th colSpan={4}>공학인증 구분</th>
                                     </tr>
                                     <tr>
+                                        <th>교양</th>
                                         <th>전공필수</th>
                                         <th>전공선택</th>
-                                        <th>교양</th>
                                         <th>공필/일선</th>
                                         <th>취득학점</th>
                                         <th>BSM</th>
                                         <th>전문교양</th>
-                                        <th>공학주제</th>
                                         <th>설계</th>
+                                        <th>공학주제</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{this.props.credit.rm}/{this.props.criteria[5].criteria_credit}</td>
-                                        <td>{this.props.credit.em}/{this.props.criteria[6].criteria_credit}</td>
-                                        <td>{this.props.credit.tl}/{this.props.criteria[4].criteria_credit}({this.props.criteria[3].criteria_credit})</td>
-                                        <td>{this.props.credit.ge + this.props.credit.cr}</td>
-                                        <td>{this.props.credit.total}/{this.props.criteria[11].criteria_credit}</td>
-                                        <td>{this.props.credit.bsm}/{this.props.criteria[7].criteria_credit}</td>
-                                        <td>{this.props.credit.sl}/{this.props.criteria[8].criteria_credit}</td>
-                                        <td>{this.props.credit.eg}/{this.props.criteria[10].criteria_credit}</td>
-                                        <td>{this.props.credit.ds}/{this.props.criteria[9].criteria_credit}</td>
+                                    <td>{this.props.credit[1].total}/{this.props.criteria[1].criteriaCredit}({this.props.criteria[5].criteriaCredit})</td>
+                                        <td>{this.props.credit[7].total}/{this.props.criteria[7].criteriaCredit}</td>
+                                        <td>{this.props.credit[8].total}/{this.props.criteria[8].criteriaCredit}</td>
+                                        <td>{this.props.credit[9].total}</td>
+                                        <td>{this.props.credit[0].total}/{this.props.criteria[0].criteriaCredit}</td>
+                                        <td>{this.props.credit[12].total}/{this.props.criteria[9].criteriaCredit}</td>
+                                        <td>{this.props.credit[13].total}/{this.props.criteria[10].criteriaCredit}</td>
+                                        <td>{this.props.credit[14].total}/{this.props.criteria[11].criteriaCredit}</td>
+                                        <td>{this.props.credit[18].total}/{this.props.criteria[12].criteriaCredit}</td>                                        
                                     </tr>
                                 </tbody>
                             </Table>;
@@ -305,6 +317,31 @@ class Tables extends Component{
                             </Form>
                 break;
             case 6:
+                data = this.props.order;
+                for(let i = 0;i<data.length;i++){
+                    if(data[i].check){
+                        list.push(
+                            <tr key={i}>
+                                <td>{data[i].preTitle}</td>
+                                <td>{data[i].title}</td>
+                                <OverlayTrigger placement="top" overlay={<Tooltip>선수과목과 후수과목을 모두 이수했습니다.</Tooltip>}>
+                                    <td className="green">만족</td>
+                                </OverlayTrigger>
+                            </tr>
+                        );
+                    }else{
+                        list.push(
+                            <tr key={i}>
+                                <td>{data[i].preTitle}</td>
+                                <td>{data[i].title}</td>
+                                <OverlayTrigger placement="top" overlay={<Tooltip>선수과목을 미이수했습니다. 이수능력확인서가 필요합니다.</Tooltip>}>
+                                    <td className="red">불만족</td>
+                                </OverlayTrigger>
+                            </tr>
+                        );
+                    }
+                    
+                }
                 _content =  <Table bordered>
                                 <thead>
                                     <tr>
@@ -314,16 +351,35 @@ class Tables extends Component{
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    {list}
+                                    {/* <tr>
                                         <td>디지털논리설계</td>
-                                        <td className="red">논리회로설계</td>
-                                        <td className="red">불만족</td>
+                                        <td>논리회로설계</td>
+                                        <OverlayTrigger placement="top" overlay={<Tooltip>선수과목을 미이수했습니다. 이수능력확인서가 필요합니다.</Tooltip>}>
+                                            <td className="red">불만족</td>
+                                        </OverlayTrigger>
+                                    </tr>
+                                    <tr>
+                                        <td>객체지향설계</td>
+                                        <td>창의적IT공학설계입문</td>
+                                        <OverlayTrigger placement="top" overlay={<Tooltip>후수과목을 선수과목보다 먼저 이수했습니다. 이수능력확인서가 필요합니다.</Tooltip>}>
+                                            <td className="red">불만족</td>
+                                        </OverlayTrigger>
                                     </tr>
                                     <tr>
                                         <td>창의적IT공학설계입문</td>
                                         <td>논리회로설계</td>
-                                        <td className="green">만족</td>
+                                        <OverlayTrigger placement="top" overlay={<Tooltip>후수과목을 미이수했습니다.</Tooltip>}>
+                                            <td className="green">만족</td>
+                                        </OverlayTrigger>
                                     </tr>
+                                    <tr>
+                                        <td>컴퓨터구조</td>
+                                        <td>컴퓨터구조설계</td>
+                                        <OverlayTrigger placement="top" overlay={<Tooltip>선수과목과 후수과목을 모두 이수했습니다.</Tooltip>}>
+                                            <td className="green">만족</td>
+                                        </OverlayTrigger>
+                                    </tr> */}
                                 </tbody>
                             </Table>;
                 break;
@@ -337,7 +393,7 @@ class Tables extends Component{
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>4.0</td>
+                                        <td>{this.props.GPA}</td>
                                         <td>4.2</td>
                                     </tr>
                                 </tbody>
