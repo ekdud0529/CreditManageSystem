@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import "../stylesheets/login.css"
 import { Button, Container, Form } from "react-bootstrap";
-import Header from "../components/header";
 import Content from "../components/content";
 import axios from 'axios';
 
@@ -29,7 +28,6 @@ class SignUp extends Component{
 		// 입력 여부 확인
 		const form = e.currentTarget;
 		if (form.checkValidity() === false){
-			// e.preventDefault(); // 제출 시 새로고침 방지
 			e.stopPropagation();  // 이벤트 전파 중단
 		}
 		this.setState({validated: true});
@@ -40,20 +38,20 @@ class SignUp extends Component{
 			if(this.state.studentId && this.state.studentName && this.state.password)
 			{	
 				axios.post("/signUp", {
-							studentId: this.state.studentId,
-							name: this.state.studentName,
-							password: this.state.password
-						})
-						.catch(function(error) {
-							alert("회원가입에 실패했습니다.");
-						})
-						.then((response) => {
-							alert("회원가입 성공");
-							window.location.href="/logIn";
-						});
+					studentId: this.state.studentId,
+					name: this.state.studentName,
+					password: this.state.password
+				})
+				.then(function(response){
+
+					window.location.href="/logIn";
+				})
+				.catch(function(error) {
+					alert("잘못되었거나 이미 존재하는 학번입니다.");
+				});
 			}
 			else
-				alert("모두 작성해 주세요.");	
+				alert("빈칸을 작성해 주세요.");	
 		}
 		else
 		{
@@ -99,7 +97,6 @@ class SignUp extends Component{
 
 		return(
 			<div>
-                <Header></Header>
                 <Content title={_title} content={_content}></Content>
             </div>
 		);

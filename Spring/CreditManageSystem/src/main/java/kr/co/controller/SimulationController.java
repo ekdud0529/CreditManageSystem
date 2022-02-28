@@ -29,7 +29,7 @@ import kr.co.vo.CreditVO;
 import kr.co.vo.CriteriaVO;
 import kr.co.vo.ManageVO;
 import kr.co.vo.OrderVO;
-import kr.co.vo.memberVO;
+import kr.co.vo.MemberVO;
 
 @Controller
 @RequestMapping("/")
@@ -45,7 +45,7 @@ public class SimulationController {
 	public List<CriteriaVO> criteria(HttpServletRequest request, HttpSession session) throws Exception{
 		logger.info("criteria");
 		session = request.getSession();
-		memberVO member = (memberVO) session.getAttribute("member");
+		MemberVO member = (MemberVO) session.getAttribute("member");
 		int admissionYear = Integer.parseInt(member.getStudentId().substring(0,4));
 		return service.criteria(admissionYear);
 	}
@@ -56,7 +56,7 @@ public class SimulationController {
 	public List<CreditVO> credit(HttpServletRequest request, HttpSession session) throws Exception{
 		logger.info("credit");
 		session = request.getSession();
-		memberVO member = (memberVO) session.getAttribute("member");
+		MemberVO member = (MemberVO) session.getAttribute("member");
 		return service.credit(member.getStudentId());
 	}
 	
@@ -66,7 +66,7 @@ public class SimulationController {
 	public float gpa(HttpServletRequest request, HttpSession session) throws Exception{
 		logger.info("gpa");
 		session = request.getSession();
-		memberVO member = (memberVO) session.getAttribute("member");
+		MemberVO member = (MemberVO) session.getAttribute("member");
 		return service.gpa(member.getStudentId());
 	}
 	
@@ -76,8 +76,19 @@ public class SimulationController {
 	public List<OrderVO> order(@RequestBody List<ManageVO> takes, HttpServletRequest request, HttpSession session) throws Exception{
 		logger.info("order");
 		session = request.getSession();
-		memberVO member = (memberVO) session.getAttribute("member");
+		MemberVO member = (MemberVO) session.getAttribute("member");
 		int year = Integer.parseInt(member.getStudentId().substring(0,4));
 		return service.order(year, takes);
+	}
+	
+	//졸업가능여부
+	@RequestMapping(value="availability", method=RequestMethod.POST)
+	@ResponseBody
+	public List<String> availability(@RequestBody List<ManageVO> takes) throws Exception{
+		logger.info("availability");
+//		session = request.getSession();
+//		memberVO member = (memberVO) session.getAttribute("member");
+//		return service.availability(member.getStudentId(), takes);
+		return service.availability("201819186", takes);
 	}
 }

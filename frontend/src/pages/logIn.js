@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import "../stylesheets/login.css"
 import { Link } from 'react-router-dom';
-import Header from "../components/header";
 import Content from "../components/content";
 import axios from "axios";
 
@@ -15,19 +14,18 @@ class LogIn extends Component{
 			password: ""
 		};
 	}
-
+	
 	handleChange = (e) => {
 		this.setState({
 			[e.target.name]: e.target.value
 		});
 	}
-
+	
 	handleSubmit = (e) => {
 		e.preventDefault();
 
 		const form = e.currentTarget;
 		if (form.checkValidity() === false){
-			//e.preventDefault();
 			e.stopPropagation();
 		}
 		this.setState({validated: true});
@@ -44,11 +42,12 @@ class LogIn extends Component{
 			.then((response) => {
 				let id = response.data.studentId;
 				let pw = response.data.password;
+				console.log(id, pw);
 
 				if(id === this.state.studentId && pw === this.state.password)
 				{
+					sessionStorage.setItem('isLogin', this.state.studentId);
 					window.location.href="/";
-					window.localStorage.setItem("loginSuccess", "success");
 				}
 				else alert("아이디 또는 비밀번호가 틀렸습니다.");
 			});
@@ -83,11 +82,10 @@ class LogIn extends Component{
 
 		return(
 			<div>
-                <Header></Header>
                 <Content title={_title} content={_content}></Content>
             </div>
 		);
 	}
 }
 
-export default LogIn
+export default LogIn;
