@@ -29,33 +29,33 @@ class Manage extends Component{
                         eg:0,   //공학주제
                         ds:0    //설계                      
                     },
-            data : [
-                {
-                    course_id:"0000123123",
-                    division_name:"전공선택",
-                    abeek_name1:"공학주제",
-                    abeek_name2:"설계",
-                    title:"영상처리",
-                    year:"2021",
-                    semester:"1",
-                    credit:"3",
-                    GP:"A+",
-                    // key: 0,
-                    id: 0
-                },
-                {
-                    course_id:"0000123456",
-                    division_name:"전공선택",
-                    abeek_name1:"공학주제",
-                    abeek_name2:"설계",
-                    title:"데이터베이스",
-                    year:"2021",
-                    semester:"2",
-                    credit:"3",
-                    GP:"A+",
-                    // key: 1,
-                    id: 1
-                }
+            data : [ // 리스트
+            //     {
+            //         course_id:"0000123123",
+            //         division_name:"전공선택",
+            //         abeek_name1:"공학주제",
+            //         abeek_name2:"설계",
+            //         title:"영상처리",
+            //         year:"2021",
+            //         semester:"1",
+            //         credit:"3",
+            //         GP:"A+",
+            //         // key: 0,
+            //         id: 0
+            //     },
+            //     {
+            //         course_id:"0000123456",
+            //         division_name:"전공선택",
+            //         abeek_name1:"공학주제",
+            //         abeek_name2:"설계",
+            //         title:"데이터베이스",
+            //         year:"2021",
+            //         semester:"2",
+            //         credit:"3",
+            //         GP:"A+",
+            //         // key: 1,
+            //         id: 1
+            //     }
             ],
             searchData: []
         }
@@ -65,6 +65,7 @@ class Manage extends Component{
         switch(m){
             case 1: 
                 this.setState({isOpenSearchModal : true});
+                this.postSearchData('전체', '전체', '전체', '0000', '', false, false, false, false)
                 break;
             case 2:
                 this.setState({isOpenResultModal : true});
@@ -87,10 +88,10 @@ class Manage extends Component{
     }
 
     onAdd = (newData) => {
-        let _data = this.state.data;
+        var _data = this.state.data;
         let _id = _data.length===0?0:_data[_data.length-1].id+1
         if(_id !== 0){
-            for(let i = 0;i<_data.length;i++){
+            for(let i = 0;i<_data.length;i++){;
                 if(newData.course_id === _data[i].course_id && newData.year === _data[i].year && newData.semester  === _data[i].semester){
                     alert("이미 추가된 과목입니다.");
                     return;
@@ -99,6 +100,7 @@ class Manage extends Component{
         }
         newData.id = _id;
         _data.push(newData);
+        this.setState({ data:_data }, console.log("data", this.state.data));
         this.calcCredit(_data);
     }
 
@@ -114,6 +116,57 @@ class Manage extends Component{
         console.log(list);
         this.setState({data: list});
         this.calcCredit(list);
+    }
+
+    onSave = () => { // 리스트 보내고 업데이트된 takes 받기
+        let course_id_arr = [];
+        let year_arr = [];
+        let semester_arr = [];
+        let gp_arr = [];
+        for(let i=0;i<this.state.data.length;i++) {
+            course_id_arr.push(this.state.data[i].course_id);
+            year_arr.push(this.state.data[i].year);
+            semester_arr.push(this.state.data[i].semester);
+            gp_arr.push(this.state.data[i].gp);
+        }
+        console.log(course_id_arr, year_arr, semester_arr);
+        axios.post("/onSave", {
+            course_id_arr: course_id_arr,
+            year_arr: year_arr,
+            semester_arr: semester_arr,
+            gp_arr: gp_arr
+        })
+        .catch((error) => {
+            alert("error")
+        })
+        .then((response) => {
+            console.log("onSave", this.state.data);
+        })
+        // let _origin = this.state.takes;
+        // let _data = this.state.data;
+        // let insert = [];
+        // let remove = [];
+        // for(var i = 0;i<_data.length;i++){
+        //     var _new = true;
+        //     for(var j = 0;j<_origin.length;j++){
+        //         if(_data[i].course_id === _origin[j].course_id && _data[i].year === _origin[j].year && _data[i].semester === _origin[j].semester){
+        //             _new = false;
+        //         }
+        //     }
+        //     if(_new) insert.push(_data[i]);
+        // }
+        // for(var k = 0;k<_origin.length;k++){
+        //     var _deleted = true;
+        //     for(var l = 0;l<_data.length;l++){
+        //         if(_origin[k].course_id === _data[l].course_id && _origin[k].year === _data[l].year && _origin[k].semester === _data[l].semester){
+        //             _deleted = false;
+        //         }
+        //     }
+        //     if(_deleted) remove.push(_origin[k]);
+        // }
+        // console.log("data", _data, "origin", this.state.takes);
+        // console.log("insert", insert);
+        // console.log("remove", remove);
     }
 
     calcCredit = (data) => {
@@ -199,18 +252,21 @@ class Manage extends Component{
         .then(function(response){
             var criteriaData = response.data;
             this.setState({criteria : criteriaData});
-        }.bind(this));
+        }.bind(this));    
     }
 
-    postSearchData = async (year, semester, target_grade, division_cd, abeekStr, title) => {
-        var newData = [];
+    postSearchData = async (year, semester, target_grade, division_cd, title, abeek_bsm, abeek_liberal_arts, abeek_tech, abeek_design) => {
+        let newData = [];
         await axios.post("/manage", {
             year: year,
             semester: semester,
             target_grade: target_grade,
             division_cd: division_cd,
-            abeekStr: abeekStr,
-            title: title
+            title: title,
+            abeek_bsm : abeek_bsm,
+            abeek_liberal_arts: abeek_liberal_arts,
+            abeek_tech: abeek_tech,
+            abeek_design: abeek_design
         })
         .catch(function(error) {
             alert("error");
@@ -220,18 +276,22 @@ class Manage extends Component{
             var id = 0;
 
             for(var i=0;i<response.data.length;i++) {
-                newData.push({
-                    course_id: response.data[i].course_id,
-                    division_name: response.data[i].division_name,
-                    abeek_name: response.data[i].abeek_name,
-                    title: response.data[i].title,
-                    year: response.data[i].year,
-                    semester: response.data[i].semester,
-                    credit: response.data[i].credit,
-                    GP:"",
-                    id: id++
-                    // key: 1,
-                })
+                response.data[i].id  = id++;
+                response.data[i].gp = "A+";
+                newData.push(
+                    response.data[i]
+                    // {
+                    // course_id: response.data[i].course_id,
+                    // division_name: response.data[i].division_name,
+                    // abeek_name: response.data[i].abeek_name,
+                    // title: response.data[i].title,
+                    // year: response.data[i].year,
+                    // semester: response.data[i].semester,
+                    // credit: response.data[i].credit,
+                    // GP:"",
+                    // id: id++
+                // }
+                )
             }
             // newSearchData에 안들어감아아마암암ㅇㅇ
             // 1=1일때 어케할건지
@@ -240,6 +300,29 @@ class Manage extends Component{
             }, console.log("newSearchData", newData))
             
         });
+    }
+
+    getTakes = () => {
+        console.log("getTakes")
+        axios.post("/getTakes", {
+
+        }).catch((error) => {
+            alert("error")
+        }).then((response) => {
+            console.log(response.data);
+            let newData = [];
+            let id = 0;
+
+            for(let i=0;i<response.data.length;i++) {
+                response.data[i].id  = id++;
+                newData.push(
+                    response.data[i]
+                )
+            }
+            this.setState({
+                data: newData
+            }, console.log("takes", this.state.takes))
+        })
     }
 
     render(){
@@ -254,7 +337,7 @@ class Manage extends Component{
                                     </div>;
                 _content =  <Container className="manage">
                                 <Tables id={1} getCriteria={this.getCriteria} calcCredit={()=>this.calcCredit(this.state.data)} criteria={this.state.criteria}  credit={this.state.credit}></Tables>
-                                <Tables id={2} onOpenSearchModal={()=>this.openModal(1)} data={this.state.data} onDelete={this.onDelete}></Tables>
+                                <Tables id={2} onOpenSearchModal={()=>this.openModal(1)} data={this.state.data} onDelete={this.onDelete} getTakes={this.getTakes} onSave={this.onSave}></Tables>
                                 <CustomModal dialogClassName="modal-w90" title="과목 검색" content={_modalContent} show={this.state.isOpenSearchModal} onHide={()=>this.closeModal(1)}></CustomModal>
                             </Container>;
                 break;
@@ -279,7 +362,7 @@ class Manage extends Component{
                                                 </Form.Group>
                                             </Form>;
                 _content =  <Container className="manage">
-                                <Tables id={3} onOpenSearchModal={()=>this.openModal(1)} onOpenResultModal={()=>this.openModal(2)} data={this.state.data} onDelete={this.onDelete}></Tables>
+                                <Tables id={3} onOpenSearchModal={()=>this.openModal(1)} onOpenResultModal={()=>this.openModal(2)} data={this.state.data} onDelete={this.onDelete} getTakes={this.getTakes}></Tables>
                                 <CustomModal dialogClassName="modal-w90" title="과목 검색" content={_modalSearchContent} show={this.state.isOpenSearchModal} onHide={()=>this.closeModal(1)}></CustomModal>
                                 <CustomModal dialogClassName="modal-w90" title="졸업시뮬레이션 결과" content={_modalResultContent} show={this.state.isOpenResultModal} onHide={()=>this.closeModal(2)}></CustomModal>
                             </Container>;
