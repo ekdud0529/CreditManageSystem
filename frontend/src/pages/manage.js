@@ -15,6 +15,7 @@ class Manage extends Component{
             criteria:[],
             credit:[],
             GPA:0,
+            order:[],
             data : [
                 {
                     course_id:"0000123123",
@@ -41,7 +42,33 @@ class Manage extends Component{
                     GP:"A+",
                     // key: 1,
                     id: 1
-                }
+                },
+                {
+                    course_id:"0000105734",
+                    division_name:"전공선택",
+                    abeek_name1:"공학주제",
+                    abeek_name2:"",
+                    title:"컴퓨터구조",
+                    year:"2020",
+                    semester:"2",
+                    credit:"3",
+                    GP:"A+",
+                    // key: 1,
+                    id: 2
+                },
+                {
+                    course_id:"0000105738",
+                    division_name:"전공선택",
+                    abeek_name1:"공학주제",
+                    abeek_name2:"요소설계",
+                    title:"컴퓨터구조설계",
+                    year:"2021",
+                    semester:"2",
+                    credit:"3",
+                    GP:"A+",
+                    // key: 1,
+                    id: 3
+                },
             ],
             searchData: []
         }
@@ -100,8 +127,8 @@ class Manage extends Component{
         this.setState({data: list});
     }
 
-    getCriteria = (admissionYear) => {
-        axios.post("/criteria",{admissionYear:admissionYear})
+    getCriteria = () => {
+        axios.post("/criteria")
         .then(function(response){
             let criteriaData = response.data;
             console.log(criteriaData);
@@ -109,8 +136,8 @@ class Manage extends Component{
         }.bind(this));
     }
 
-    getCredit = (studentId) => {
-        axios.post("/credit",{studentId:studentId})
+    getCredit = () => {
+        axios.post("/credit")
         .then(function(response){
             let creditData = response.data; 
             console.log(creditData);
@@ -118,11 +145,21 @@ class Manage extends Component{
         }.bind(this));
     }
 
-    getGPA = (studentId) => {
-        axios.post("/gpa",{studentId:studentId})
+    getGPA = () => {
+        axios.post("/gpa")
         .then(function(response){
             console.log(response.data);
             this.setState({GPA : response.data});
+        }.bind(this));
+    }
+
+    getOrderSatisfy = () => {
+        let dataList = this.state.data;
+        console.log(dataList);
+        axios.post("/order",dataList)
+        .then(function(response){
+            console.log(response.data);
+            this.setState({order : response.data});
         }.bind(this));
     }
 
@@ -177,7 +214,7 @@ class Manage extends Component{
                                         <Tables id={5} data={this.state.data} searchData={this.state.searchData} onAdd={this.onAdd}></Tables>
                                     </div>;
                 _content =  <Container className="manage">
-                                <Tables id={1} getCriteria={()=>this.getCriteria(2018)} getCredit={()=>this.getCredit("201819186")} criteria={this.state.criteria}  credit={this.state.credit}></Tables>
+                                <Tables id={1} getCriteria={this.getCriteria} getCredit={this.getCredit} criteria={this.state.criteria}  credit={this.state.credit}></Tables>
                                 <Tables id={2} onOpenSearchModal={()=>this.openModal(1)} data={this.state.data} onDelete={this.onDelete}></Tables>
                                 <CustomModal dialogClassName="modal-w90" title="과목 검색" content={_modalContent} show={this.state.isOpenSearchModal} onHide={()=>this.closeModal(1)}></CustomModal>
                             </Container>;
@@ -191,15 +228,15 @@ class Manage extends Component{
                 var _modalResultContent =   <Form className="manage result">
                                                 <Form.Group>
                                                     <Form.Label>이수현황</Form.Label>
-                                                    <Tables id={1} getCriteria={()=>this.getCriteria(2018)} getCredit={()=>this.getCredit("201819186")} criteria={this.state.criteria} credit={this.state.credit}></Tables>
+                                                    <Tables id={1} getCriteria={this.getCriteria} getCredit={this.getCredit} criteria={this.state.criteria} credit={this.state.credit}></Tables>
                                                 </Form.Group>
                                                 <Form.Group>
                                                     <Form.Label>선후수 만족 여부</Form.Label>
-                                                    <Tables id={6}></Tables>
+                                                    <Tables id={6} getOrderSatisfy={this.getOrderSatisfy} order={this.state.order}></Tables>
                                                 </Form.Group>
                                                 <Form.Group>
                                                     <Form.Label>평균 평점</Form.Label>
-                                                    <Tables id={7} getGPA={()=>this.getGPA("201819186")} GPA={this.state.GPA}></Tables>
+                                                    <Tables id={7} getGPA={this.getGPA} GPA={this.state.GPA}></Tables>
                                                 </Form.Group>
                                             </Form>;
                 _content =  <Container className="manage">

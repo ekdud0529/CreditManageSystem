@@ -5,11 +5,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
 import kr.co.dao.SimulationDAO;
 import kr.co.vo.CreditVO;
 import kr.co.vo.CriteriaVO;
+import kr.co.vo.ManageVO;
+import kr.co.vo.OrderVO;
 
 @Service
 public class SimulationServiceImpl implements SimulationService{
@@ -70,6 +73,36 @@ public class SimulationServiceImpl implements SimulationService{
 	@Override
 	public float gpa(String studentId) throws Exception {
 		return dao.gpa(studentId);
+	}
+
+	//선후수체계
+	@Override
+	public List<OrderVO> order(int year, List<ManageVO> takes) throws Exception {
+		List<OrderVO> order = dao.order(year);
+		List<OrderVO> remove = new ArrayList<>();
+		
+		for(int i = 0;i<order.size();i++) {
+			String preId = order.get(i).getPreCourseId();
+			String postId = order.get(i).getCourseId();
+			ManageVO preCourse = null, postCourse = null;
+			for(ManageVO t : takes) {
+				if(t.getCourse_id().equals(preId)) preCourse = t;
+				if(t.getCourse_id().equals(postId)) postCourse = t;
+				if(preCourse!=null && postCourse!=null) break;
+			}
+			if(preCourse!=null && postCourse!=null) {
+				if(preCourse.getYear()<postCourse.getYear() || (preCourse.getYear()==postCourse.getYear() && preCourse.getSemester()<postCourse.getSemester())) {
+					order.get(i).setCheck(true);
+				}
+			}else if(preCourse!=null) {
+				order.get(i).setCheck(true);
+			}else if(preCourse==null && postCourse==null) {
+				remove.add(order.get(i));
+			}
+		}
+		
+		order.removeAll(remove);
+		return order;
 	}
 
 }
