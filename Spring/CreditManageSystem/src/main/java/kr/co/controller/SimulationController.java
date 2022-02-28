@@ -80,4 +80,15 @@ public class SimulationController {
 		int year = Integer.parseInt(member.getStudentId().substring(0,4));
 		return service.order(year, takes);
 	}
+	
+	//졸업가능여부
+	@RequestMapping(value="availability", method=RequestMethod.POST)
+	@ResponseBody
+	public List<String> availability(@RequestBody List<ManageVO> takes) throws Exception{
+		logger.info("availability");
+//		session = request.getSession();
+//		memberVO member = (memberVO) session.getAttribute("member");
+//		return service.availability(member.getStudentId(), takes);
+		return service.availability("201819186", takes);
+	}
 }
