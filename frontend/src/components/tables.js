@@ -9,6 +9,10 @@ class Tables extends Component{
                 this.props.getCriteria();
                 this.props.getCredit();
                 break;
+            case 2:
+            case 3:
+                this.props.getTakes();
+                break;
             case 6:
                 this.props.getOrderSatisfy();
                 break;
@@ -23,13 +27,13 @@ class Tables extends Component{
             year:"전체",
             semester:"전체",
             target_grade:"전체",
-            division:"00",
+            division:"0000",
             abeek_bsm : false,
             abeek_liberal_arts: false,
             abeek_tech: false,
             abeek_design: false,
             title:"",
-            GP:"A+", // 검색화면에서 등급 선택
+            gp:"A+", // 검색화면에서 등급 선택
         }
         
     }
@@ -37,16 +41,16 @@ class Tables extends Component{
     combineAbeek = (bsm, liberalArts, tech, design) => {
         var abeekStr = "";
         if(bsm) {
-            abeekStr = abeekStr + "01|";
+            abeekStr = abeekStr + "021|";
         }
         if(liberalArts) {
-            abeekStr = abeekStr + "02|";
+            abeekStr = abeekStr + "022|";
         }
         if(tech) {
-            abeekStr = abeekStr + "03|";
+            abeekStr = abeekStr + "024|";
         }
         if(design) {
-            abeekStr = abeekStr + "04|";
+            abeekStr = abeekStr + "023|";
         }
 
         abeekStr = "regexp_like(ac.abeek_cd, \'[" + abeekStr.slice(0,-1) + "]\')";
@@ -78,8 +82,8 @@ class Tables extends Component{
 
     handleChangeGP = (e) => {
         console.log(e.target.id, e.target.value);
-        let _searchData = this.state.searchData;
-        _searchData[e.target.id].GP = e.target.value;
+        let _searchData = this.props.searchData;
+        _searchData[e.target.id].gp = e.target.value;
         this.setState({searchData:_searchData});
     }
 
@@ -87,24 +91,25 @@ class Tables extends Component{
         e.preventDefault();
         console.log("search");
 
-        var year = this.state.year==="전체"?"1=1":"s.year=" + this.state.year;
-        var semester = this.state.semester==="전체"?"1=1":"s.semester=" + this.state.semester;
-        var target_grade = this.state.target_grade==="전체"?"1=1":"s.target_grade=" + this.state.target_grade;
-        var division_cd = this.state.division==="00"?"1=1":"s.division_cd=" + this.state.division;
-        var abeekStr = this.combineAbeek(this.state.abeek_bsm, this.state.abeek_liberal_arts, this.state.abeek_tech, this.state.abeek_design);
-        var title = "c.title like \'%" + this.state.title + "%\'"
+        // var year = this.state.year==="전체"?"1=1":"s.year=" + this.state.year;
+        // var semester = this.state.semester==="전체"?"1=1":"s.semester=" + this.state.semester;
+        // var target_grade = this.state.target_grade==="전체"?"1=1":"s.target_grade=" + this.state.target_grade;
+        // var division_cd = this.state.division==="0000"?"1=1":"s.division_cd=" + this.state.division;
+        // var abeekStr = this.combineAbeek(this.state.abeek_bsm, this.state.abeek_liberal_arts, this.state.abeek_tech, this.state.abeek_design);
+        // var title = "c.title like \'%" + this.state.title + "%\'"
         
-        await this.props.postSearchData(year, semester, target_grade, division_cd, abeekStr, title);
+        await this.props.postSearchData(this.state.year, this.state.semester, this.state.target_grade, this.state.division,
+            this.state.title, this.state.abeek_bsm, this.state.abeek_liberal_arts, this.state.abeek_tech, this.state.abeek_design);
     }
 
     render(){ 
         // null로 해놓고 for문 다 case문 안으로
         // searchData: manage -> tables
-        console.log(this.props.id);
+        // console.log(this.props.id);
         var data = null;
         var list = [];
         var _content = null;
-        var _button = this.props.id===2?<Button>저장</Button>:<Button onClick={this.props.onOpenResultModal}>결과</Button>
+        var _button = this.props.id===2?<Button onClick={this.props.onSave}>저장</Button>:<Button onClick={this.props.onOpenResultModal}>결과</Button>
         switch(this.props.id){
             case 1:
                 _content =  this.props.criteria.length === 0 || this.props.credit.length === 0?null:
@@ -145,16 +150,15 @@ class Tables extends Component{
             case 3:
                 data = this.props.data;
                 for(let i=0;i<data.length;i++) {
-                    let abeekStr = data[i].abeek_name1 + "/" + data[i].abeek_name2;
                     list.push(
                         <tr key={i}>
                             <td>{data[i].division_name}</td>
-                            <td>{abeekStr}</td>
+                            <td>{data[i].abeek_name}</td>
                             <td>{data[i].title}</td>
                             <td>{data[i].year}</td>
                             <td>{data[i].semester}</td>
                             <td>{data[i].credit}</td>
-                            <td>{data[i].GP}</td>
+                            <td>{data[i].gp}</td>
                             <td><Button id={data[i].id} variant="outline-danger" size="sm" onClick={function(e) {
                                 e.preventDefault();
                                 this.props.onDelete(e.target.id);
@@ -226,12 +230,12 @@ class Tables extends Component{
                                     <Form.Group as={Col} md={3}>
                                         <Form.Label>이수구분</Form.Label>
                                         <Form.Select onChange={this.handleChange} name="division">
-                                            <option value="00">전체</option>
-                                            <option value="02">전공필수</option>
-                                            <option value="03">전공선택</option>
-                                            <option value="05">일반선택</option>
-                                            <option value="01">교양</option>
-                                            <option value="04">공통필수</option>
+                                            <option value="0000">전체</option>
+                                            <option value="0131">전공필수</option>
+                                            <option value="0132">전공선택</option>
+                                            <option value="0151">일반선택</option>
+                                            <option value="011">교양</option>
+                                            <option value="0141">공통필수</option>
                                         </Form.Select>
                                     </Form.Group>
                                     <Form.Group as={Col} md={4}>
@@ -271,7 +275,7 @@ class Tables extends Component{
                             <td>{searchData[i].semester}</td>
                             <td>{searchData[i].credit}</td>
                         <td>
-                            <Form.Select aria-label="Default select example" id={i===0?"0":i} onChange={this.handleChangeGP} name="GP" size="sm">
+                            <Form.Select aria-label="Default select example" id={i===0?"0":i} onChange={this.handleChangeGP} name="gp" size="sm">
                                 <option value="A+">A+</option>
                                 <option value="A">A</option>
                                 <option value="B+">B+</option>

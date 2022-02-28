@@ -63,7 +63,6 @@ public class SimulationController {
 	//∆Ú±’∆Ú¡°
 	@RequestMapping(value="gpa", method=RequestMethod.POST)
 	@ResponseBody
-	public float gpa(@RequestBody MemberVO vo) throws Exception{
 	public float gpa(HttpServletRequest request, HttpSession session) throws Exception{
 		logger.info("gpa");
 		session = request.getSession();
