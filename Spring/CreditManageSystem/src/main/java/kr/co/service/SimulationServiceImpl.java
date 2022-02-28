@@ -93,16 +93,56 @@ public class SimulationServiceImpl implements SimulationService{
 			if(preCourse!=null && postCourse!=null) {
 				if(Integer.parseInt(preCourse.getYear()) < Integer.parseInt(postCourse.getYear()) || (preCourse.getYear()==postCourse.getYear() && Integer.parseInt(preCourse.getSemester()) < Integer.parseInt(postCourse.getSemester()))) {
 					order.get(i).setCheck(true);
+					order.get(i).setNotice("선수과목과 후수과목을 모두 이수했습니다.");
+				}else {
+					order.get(i).setNotice("후수과목을 선수과목보다 먼저 이수했습니다. 이수능력확인서가 필요합니다.");
 				}
 			}else if(preCourse!=null) {
 				order.get(i).setCheck(true);
-			}else if(preCourse==null && postCourse==null) {
+				order.get(i).setNotice("후수과목을 미이수했습니다.");
+			}else if(postCourse!=null){
+				order.get(i).setNotice("선수과목을 미이수했습니다. 이수능력확인서가 필요합니다.");
+			}else {
 				remove.add(order.get(i));
 			}
 		}
 		
 		order.removeAll(remove);
 		return order;
+	}
+
+	//졸업가능여부
+	@Override
+	public List<String> availability(String studentId, List<ManageVO> takes) throws Exception {
+		int year = Integer.parseInt(studentId.substring(0, 4));
+		List<CriteriaVO> criteria = criteria(year);
+		List<CreditVO> credit = credit(studentId);
+		List<OrderVO> order = order(year, takes);
+		List<String> result = new ArrayList<String>();
+		result.add("가능");
+		
+		for(CreditVO c : credit) {
+			for(CriteriaVO cr : criteria) {
+				if(c.getCode().equals(cr.getCriteriaCd())) {
+					if(c.getTotal() < cr.getCriteriaCredit()) {
+						result.add(c.getName() + "학점이 " + (cr.getCriteriaCredit()-c.getTotal()) + "학점 부족합니다.");
+						break;
+					}
+					
+				}
+			}
+		}
+		
+		for(OrderVO o : order) {
+			if(!o.isCheck()) {
+				result.add("선후수체계를 만족하지 않습니다.");
+				break;
+			}
+		}
+		
+		if(result.size()>1) result.set(0, "불가능");
+		
+		return result;
 	}
 
 }

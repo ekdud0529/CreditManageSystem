@@ -8,6 +8,7 @@ public class OrderVO {
 	private int startYear;
 	private int endYear;
 	private boolean check;
+	private String notice;
 	
 	public String getPreCourseId() {
 		return preCourseId;
@@ -51,7 +52,11 @@ public class OrderVO {
 	public void setCheck(boolean check) {
 		this.check = check;
 	}
+	public String getNotice() {
+		return notice;
+	}
+	public void setNotice(String notice) {
+		this.notice = notice;
+	}
 	
-	
-
 }

@@ -19,5 +19,8 @@ public interface SimulationService {
 	
 	//선후수체계
 	public List<OrderVO> order(int year, List<ManageVO> takes) throws Exception;
+	
+	//졸업가능여부
+	public List<String> availability(String studentId, List<ManageVO> takes) throws Exception;
 
 }
