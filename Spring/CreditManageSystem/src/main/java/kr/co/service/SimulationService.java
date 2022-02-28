@@ -4,6 +4,8 @@ import java.util.List;
 
 import kr.co.vo.CreditVO;
 import kr.co.vo.CriteriaVO;
+import kr.co.vo.ManageVO;
+import kr.co.vo.OrderVO;
 
 public interface SimulationService {
 	//졸업기준
@@ -14,5 +16,8 @@ public interface SimulationService {
 	
 	//평균평점
 	public float gpa(String studentId) throws Exception;
+	
+	//선후수체계
+	public List<OrderVO> order(int year, List<ManageVO> takes) throws Exception;
 
 }
