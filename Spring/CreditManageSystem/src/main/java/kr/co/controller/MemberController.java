@@ -13,22 +13,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.co.service.memberService;
-import kr.co.vo.memberVO;
+import kr.co.service.MemberService;
+import kr.co.vo.MemberVO;
 
 @Controller
 @RequestMapping("")
-public class memberController {
+public class MemberController {
 	
-	private static final Logger Logger = LoggerFactory.getLogger(memberController.class);
+	private static final Logger Logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@Inject
-	memberService service;
+	MemberService service;
 	
 	// 회원가입 데이터 post
+	@ResponseBody
 	@CrossOrigin
 	@RequestMapping(value="/signUp", method = RequestMethod.POST)
-	public void postRegister(@RequestBody memberVO vo) throws Exception{
+	public void postRegister(@RequestBody MemberVO vo) throws Exception{
 		Logger.info("post register");
 		
 		System.out.println("id : " + vo.getStudentId());
@@ -42,12 +43,12 @@ public class memberController {
 	@ResponseBody
 	@CrossOrigin
 	@RequestMapping(value="/logIn", method=RequestMethod.POST)
-	public memberVO login(@RequestBody memberVO vo, HttpServletRequest request, HttpSession session) throws Exception{
+	public MemberVO login(@RequestBody MemberVO vo, HttpServletRequest request, HttpSession session) throws Exception{
 		Logger.info("post login");
 		
 		session = request.getSession();
 		
-		memberVO login = service.logIn(vo);
+		MemberVO login = service.logIn(vo);
 		
 		System.out.println("--POST--");
 		System.out.println(vo.getStudentId());
@@ -61,11 +62,12 @@ public class memberController {
 		{
 			session.setAttribute("member", login);
 			System.out.println("--session--");
-			memberVO isLogIn = (memberVO) session.getAttribute("member");
+			MemberVO isLogIn = (MemberVO) session.getAttribute("member");
 			System.out.println(isLogIn.getStudentId());
 			System.out.println(isLogIn.getPassword());
 		}
 		else session.setAttribute("member", null);
+		
 		return login;
 	}
 	

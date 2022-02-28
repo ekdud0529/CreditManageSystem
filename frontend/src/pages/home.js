@@ -1,5 +1,4 @@
 import React,{Component} from "react";
-import Header from "../components/header";
 import Content from "../components/content";
 import "../stylesheets/home.css";
 import { Button, Container } from "react-bootstrap";
@@ -14,7 +13,6 @@ class Home extends Component{
         
         return(
             <div>
-                <Header></Header>
                 <Content content={_content}></Content>
             </div>
         );

@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import Header from "../components/header";
 import Content from "../components/content";
 import Tables from "../components/tables";
 import CustomModal from "../components/customModal";
@@ -214,7 +213,6 @@ class Manage extends Component{
 
         return(
             <div>
-                <Header></Header>
                 <Content title={_title} content={_content}></Content>
             </div>
         );

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.service.SimulationService;
 import kr.co.vo.CreditVO;
 import kr.co.vo.CriteriaVO;
-import kr.co.vo.memberVO;
+import kr.co.vo.MemberVO;
 
 @Controller
 @RequestMapping("/")
@@ -37,7 +37,7 @@ public class SimulationController {
 	//√ÎµÊ«–¡°
 	@RequestMapping(value="credit", method=RequestMethod.POST)
 	@ResponseBody
-	public List<CreditVO> credit(@RequestBody memberVO vo) throws Exception{
+	public List<CreditVO> credit(@RequestBody MemberVO vo) throws Exception{
 		logger.info("credit");
 		return service.credit(vo.getStudentId());
 	}
@@ -45,7 +45,7 @@ public class SimulationController {
 	//∆Ú±’∆Ú¡°
 	@RequestMapping(value="gpa", method=RequestMethod.POST)
 	@ResponseBody
-	public float gpa(@RequestBody memberVO vo) throws Exception{
+	public float gpa(@RequestBody MemberVO vo) throws Exception{
 		logger.info("gpa");
 		return service.gpa(vo.getStudentId());
 	}
