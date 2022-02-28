@@ -42,6 +42,7 @@ class LogIn extends Component{
 			.then((response) => {
 				let id = response.data.studentId;
 				let pw = response.data.password;
+				console.log(id, pw);
 
 				if(id === this.state.studentId && pw === this.state.password)
 				{

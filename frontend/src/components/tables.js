@@ -320,7 +320,7 @@ class Tables extends Component{
                             <tr key={i}>
                                 <td>{data[i].preTitle}</td>
                                 <td>{data[i].title}</td>
-                                <OverlayTrigger placement="top" overlay={<Tooltip>선수과목과 후수과목을 모두 이수했습니다.</Tooltip>}>
+                                <OverlayTrigger placement="top" overlay={<Tooltip>{data[i].notice}</Tooltip>}>
                                     <td className="green">만족</td>
                                 </OverlayTrigger>
                             </tr>
@@ -330,7 +330,7 @@ class Tables extends Component{
                             <tr key={i}>
                                 <td>{data[i].preTitle}</td>
                                 <td>{data[i].title}</td>
-                                <OverlayTrigger placement="top" overlay={<Tooltip>선수과목을 미이수했습니다. 이수능력확인서가 필요합니다.</Tooltip>}>
+                                <OverlayTrigger placement="top" overlay={<Tooltip>{data[i].notice}</Tooltip>}>
                                     <td className="red">불만족</td>
                                 </OverlayTrigger>
                             </tr>
@@ -348,34 +348,6 @@ class Tables extends Component{
                                 </thead>
                                 <tbody>
                                     {list}
-                                    {/* <tr>
-                                        <td>디지털논리설계</td>
-                                        <td>논리회로설계</td>
-                                        <OverlayTrigger placement="top" overlay={<Tooltip>선수과목을 미이수했습니다. 이수능력확인서가 필요합니다.</Tooltip>}>
-                                            <td className="red">불만족</td>
-                                        </OverlayTrigger>
-                                    </tr>
-                                    <tr>
-                                        <td>객체지향설계</td>
-                                        <td>창의적IT공학설계입문</td>
-                                        <OverlayTrigger placement="top" overlay={<Tooltip>후수과목을 선수과목보다 먼저 이수했습니다. 이수능력확인서가 필요합니다.</Tooltip>}>
-                                            <td className="red">불만족</td>
-                                        </OverlayTrigger>
-                                    </tr>
-                                    <tr>
-                                        <td>창의적IT공학설계입문</td>
-                                        <td>논리회로설계</td>
-                                        <OverlayTrigger placement="top" overlay={<Tooltip>후수과목을 미이수했습니다.</Tooltip>}>
-                                            <td className="green">만족</td>
-                                        </OverlayTrigger>
-                                    </tr>
-                                    <tr>
-                                        <td>컴퓨터구조</td>
-                                        <td>컴퓨터구조설계</td>
-                                        <OverlayTrigger placement="top" overlay={<Tooltip>선수과목과 후수과목을 모두 이수했습니다.</Tooltip>}>
-                                            <td className="green">만족</td>
-                                        </OverlayTrigger>
-                                    </tr> */}
                                 </tbody>
                             </Table>;
                 break;

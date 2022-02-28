@@ -63,7 +63,6 @@ public class SimulationController {
 	//Æò±ÕÆòÁ¡
 	@RequestMapping(value="gpa", method=RequestMethod.POST)
 	@ResponseBody
-	public float gpa(@RequestBody MemberVO vo) throws Exception{
 	public float gpa(HttpServletRequest request, HttpSession session) throws Exception{
 		logger.info("gpa");
 		session = request.getSession();
@@ -80,5 +79,16 @@ public class SimulationController {
 		MemberVO member = (MemberVO) session.getAttribute("member");
 		int year = Integer.parseInt(member.getStudentId().substring(0,4));
 		return service.order(year, takes);
+	}
+	
+	//Á¹¾÷°¡´É¿©ºÎ
+	@RequestMapping(value="availability", method=RequestMethod.POST)
+	@ResponseBody
+	public List<String> availability(@RequestBody List<ManageVO> takes) throws Exception{
+		logger.info("availability");
+//		session = request.getSession();
+//		memberVO member = (memberVO) session.getAttribute("member");
+//		return service.availability(member.getStudentId(), takes);
+		return service.availability("201819186", takes);
 	}
 }

@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Content from "../components/content";
 import Tables from "../components/tables";
 import CustomModal from "../components/customModal";
-import { Container, Form } from "react-bootstrap";
+import { Accordion, Container, Form, ListGroup } from "react-bootstrap";
 import "../stylesheets/manage.css"
 import axios from "axios";
 
@@ -18,10 +18,10 @@ class Manage extends Component{
             order:[],
             data : [
                 {
-                    course_id:"0000123123",
+                    course_id:"0000103750",
                     division_name:"전공선택",
                     abeek_name1:"공학주제",
-                    abeek_name2:"설계",
+                    abeek_name2:"요소설계",
                     title:"영상처리",
                     year:"2021",
                     semester:"1",
@@ -31,10 +31,10 @@ class Manage extends Component{
                     id: 0
                 },
                 {
-                    course_id:"0000123456",
+                    course_id:"0000115488",
                     division_name:"전공선택",
                     abeek_name1:"공학주제",
-                    abeek_name2:"설계",
+                    abeek_name2:"요소설계",
                     title:"데이터베이스",
                     year:"2021",
                     semester:"2",
@@ -68,6 +68,19 @@ class Manage extends Component{
                     GP:"A+",
                     // key: 1,
                     id: 3
+                },
+                {
+                    course_id:"0000123443",
+                    division_name:"전공선택",
+                    abeek_name1:"공학주제",
+                    abeek_name2:"종합설계",
+                    title:"IT융복합종합설계",
+                    year:"2021",
+                    semester:"2",
+                    credit:"3",
+                    GP:"A+",
+                    // key: 1,
+                    id: 4
                 },
             ],
             searchData: []
@@ -225,7 +238,22 @@ class Manage extends Component{
                                                 <Tables id={4} pageId={this.props.id} postSearchData={this.postSearchData}></Tables>
                                                 <Tables id={5} data={this.state.data} searchData={this.state.searchData} onAdd={this.onAdd}></Tables>
                                             </div>;
+                
                 var _modalResultContent =   <Form className="manage result">
+                                                <Form.Group className="mb-3">
+                                                    <Form.Label>졸업 가능 여부</Form.Label>
+                                                    <Accordion defaultActiveKey={0}>
+                                                        <Accordion.Item eventKey="0">
+                                                            <Accordion.Header><h6 className="red">불가능</h6></Accordion.Header>
+                                                            <Accordion.Body>
+                                                                <ListGroup variant="flush" as="ol" numbered>
+                                                                    <ListGroup.Item as="li">선후수불만족</ListGroup.Item>
+                                                                    <ListGroup.Item as="li">학점부족</ListGroup.Item>
+                                                                </ListGroup>
+                                                            </Accordion.Body>
+                                                        </Accordion.Item>
+                                                    </Accordion>
+                                                </Form.Group>
                                                 <Form.Group>
                                                     <Form.Label>이수현황</Form.Label>
                                                     <Tables id={1} getCriteria={this.getCriteria} getCredit={this.getCredit} criteria={this.state.criteria} credit={this.state.credit}></Tables>
