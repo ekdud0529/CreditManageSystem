@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -41,34 +42,42 @@ public class SimulationController {
 	//졸업기준
 	@RequestMapping(value="criteria", method=RequestMethod.POST)
 	@ResponseBody
-	public List<CriteriaVO> criteria(@RequestBody CriteriaVO vo) throws Exception{
+	public List<CriteriaVO> criteria(HttpServletRequest request, HttpSession session) throws Exception{
 		logger.info("criteria");
-		return service.criteria(vo.getAdmissionYear());
+		session = request.getSession();
+		memberVO member = (memberVO) session.getAttribute("member");
+		int admissionYear = Integer.parseInt(member.getStudentId().substring(0,4));
+		return service.criteria(admissionYear);
 	}
 	
 	//취득학점
 	@RequestMapping(value="credit", method=RequestMethod.POST)
 	@ResponseBody
-	public List<CreditVO> credit(@RequestBody memberVO vo) throws Exception{
+	public List<CreditVO> credit(HttpServletRequest request, HttpSession session) throws Exception{
 		logger.info("credit");
-		return service.credit(vo.getStudentId());
+		session = request.getSession();
+		memberVO member = (memberVO) session.getAttribute("member");
+		return service.credit(member.getStudentId());
 	}
 	
 	//평균평점
 	@RequestMapping(value="gpa", method=RequestMethod.POST)
 	@ResponseBody
-	public float gpa(@RequestBody memberVO vo) throws Exception{
+	public float gpa(HttpServletRequest request, HttpSession session) throws Exception{
 		logger.info("gpa");
-		return service.gpa(vo.getStudentId());
+		session = request.getSession();
+		memberVO member = (memberVO) session.getAttribute("member");
+		return service.gpa(member.getStudentId());
 	}
 	
 	//선후수체계
 	@RequestMapping(value="order", method=RequestMethod.POST)
 	@ResponseBody
-	public List<OrderVO> order(@RequestBody List<ManageVO> takes) throws Exception{
+	public List<OrderVO> order(@RequestBody List<ManageVO> takes, HttpServletRequest request, HttpSession session) throws Exception{
 		logger.info("order");
-		String studentId = "201819186";
-		int year = Integer.parseInt(studentId.substring(0,4));
+		session = request.getSession();
+		memberVO member = (memberVO) session.getAttribute("member");
+		int year = Integer.parseInt(member.getStudentId().substring(0,4));
 		return service.order(year, takes);
 	}
 }

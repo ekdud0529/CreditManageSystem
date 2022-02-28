@@ -9,7 +9,7 @@ class Header extends Component{
                     <Nav>
                         <Nav.Link href="/manage">이수과목관리</Nav.Link>
                         <Nav.Link href="/simulation">졸업시뮬레이션</Nav.Link>
-						<Nav.Link href="/logIn">{isLogin?"로그아웃":"로그인"}</Nav.Link>
+						<Nav.Link href="/logIn">로그인</Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>

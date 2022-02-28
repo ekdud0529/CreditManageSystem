@@ -9,6 +9,9 @@ class Tables extends Component{
                 this.props.getCriteria();
                 this.props.getCredit();
                 break;
+            case 6:
+                this.props.getOrderSatisfy();
+                break;
             case 7:
                 this.props.getGPA();
                 break;
@@ -310,6 +313,31 @@ class Tables extends Component{
                             </Form>
                 break;
             case 6:
+                data = this.props.order;
+                for(let i = 0;i<data.length;i++){
+                    if(data[i].check){
+                        list.push(
+                            <tr key={i}>
+                                <td>{data[i].preTitle}</td>
+                                <td>{data[i].title}</td>
+                                <OverlayTrigger placement="top" overlay={<Tooltip>선수과목과 후수과목을 모두 이수했습니다.</Tooltip>}>
+                                    <td className="green">만족</td>
+                                </OverlayTrigger>
+                            </tr>
+                        );
+                    }else{
+                        list.push(
+                            <tr key={i}>
+                                <td>{data[i].preTitle}</td>
+                                <td>{data[i].title}</td>
+                                <OverlayTrigger placement="top" overlay={<Tooltip>선수과목을 미이수했습니다. 이수능력확인서가 필요합니다.</Tooltip>}>
+                                    <td className="red">불만족</td>
+                                </OverlayTrigger>
+                            </tr>
+                        );
+                    }
+                    
+                }
                 _content =  <Table bordered>
                                 <thead>
                                     <tr>
@@ -319,7 +347,8 @@ class Tables extends Component{
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    {list}
+                                    {/* <tr>
                                         <td>디지털논리설계</td>
                                         <td>논리회로설계</td>
                                         <OverlayTrigger placement="top" overlay={<Tooltip>선수과목을 미이수했습니다. 이수능력확인서가 필요합니다.</Tooltip>}>
@@ -346,7 +375,7 @@ class Tables extends Component{
                                         <OverlayTrigger placement="top" overlay={<Tooltip>선수과목과 후수과목을 모두 이수했습니다.</Tooltip>}>
                                             <td className="green">만족</td>
                                         </OverlayTrigger>
-                                    </tr>
+                                    </tr> */}
                                 </tbody>
                             </Table>;
                 break;
