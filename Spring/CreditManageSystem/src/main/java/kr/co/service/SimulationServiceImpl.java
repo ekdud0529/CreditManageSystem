@@ -91,7 +91,7 @@ public class SimulationServiceImpl implements SimulationService{
 				if(preCourse!=null && postCourse!=null) break;
 			}
 			if(preCourse!=null && postCourse!=null) {
-				if(preCourse.getYear()<postCourse.getYear() || (preCourse.getYear()==postCourse.getYear() && preCourse.getSemester()<postCourse.getSemester())) {
+				if(Integer.parseInt(preCourse.getYear()) < Integer.parseInt(postCourse.getYear()) || (preCourse.getYear()==postCourse.getYear() && Integer.parseInt(preCourse.getSemester()) < Integer.parseInt(postCourse.getSemester()))) {
 					order.get(i).setCheck(true);
 				}
 			}else if(preCourse!=null) {

@@ -204,7 +204,7 @@ class Manage extends Component{
             }
             this.setState({
                 data: newData
-            }, console.log("takes", this.state.takes))
+            }, console.log("takes", this.state.data))
         })
     }
 
@@ -220,7 +220,7 @@ class Manage extends Component{
                                     </div>;
                 _content =  <Container className="manage">
                                 <Tables id={1} getCriteria={this.getCriteria} getCredit={this.getCredit} criteria={this.state.criteria}  credit={this.state.credit}></Tables>
-                                <Tables id={2} onOpenSearchModal={()=>this.openModal(1)} data={this.state.data} onDelete={this.onDelete}></Tables>
+                                <Tables id={2} onOpenSearchModal={()=>this.openModal(1)} data={this.state.data} onDelete={this.onDelete} getTakes={this.getTakes}></Tables>
                                 <CustomModal dialogClassName="modal-w90" title="과목 검색" content={_modalContent} show={this.state.isOpenSearchModal} onHide={()=>this.closeModal(1)}></CustomModal>
                             </Container>;
                 break;
