@@ -16,5 +16,5 @@ IT정보공학과 졸업 학점 관리 시스템
 - Oracle
 
 ### ERD
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e1a6d4c4-7f4f-4ec8-86b2-5f50f01165e4/Untitled.png)
+![KakaoTalk_20220123_191040139](https://user-images.githubusercontent.com/45174177/199898786-5fb35da5-2342-4d65-b56d-7b17ef4bff27.png)
 
