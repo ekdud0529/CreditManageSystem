@@ -39,3 +39,6 @@ IT정보공학과 졸업 학점 관리 시스템
   
 ### 회원가입 화면
 <img width="900" src="https://user-images.githubusercontent.com/45174177/199900115-19b325ac-f91d-4489-828b-cbed126cc7a2.png">
+
+### 개선할 점
+- DB에 없는 과목을 직접 입력할 때, Primary key 설정 문제를 해결하지 못해 기능 구현을 하지 못 했다.
