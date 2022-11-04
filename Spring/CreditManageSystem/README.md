@@ -32,7 +32,7 @@ IT정보공학과 졸업 학점 관리 시스템
 <img width="900" src="https://user-images.githubusercontent.com/45174177/199900034-213eac03-4dd6-4406-898c-cab2098c4e61.png">
   
 ### 졸업 시뮬레이션 결과 화면
-<img width="900" src="">
+<img width="900" src="https://user-images.githubusercontent.com/45174177/199902474-4785d139-0e2b-4fc3-b56f-1b87a33be40d.png">
   
 ### 로그인 화면
 <img width="900" src="https://user-images.githubusercontent.com/45174177/199900086-01e9cfe7-5ec9-49ab-8afd-47ec0e961ca0.png">
