@@ -11,7 +11,7 @@ IT정보공학과 졸업 학점 관리 시스템
 |회원가입 및 로그인|- 회원가입<br>- 로그인||
   
 ## 개발 환경
-- ReactJS
+- ReactJS, React Bootstrap
 - Spring
 - Oracle
   
