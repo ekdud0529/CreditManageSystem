@@ -13,13 +13,11 @@ public class MemberDAOImpl implements MemberDAO{
 	@Inject
 	private SqlSession sql;
 	
-	// 로그인
 	@Override
 	public MemberVO logIn(MemberVO vo) throws Exception {
 		return sql.selectOne("MemberMapper.login", vo);
 	}
 	
-	// 회원가입
 	@Override
 	public void register(MemberVO vo) throws Exception {
 		sql.insert("MemberMapper.register", vo);
