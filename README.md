@@ -17,7 +17,7 @@
   
 ## 개발 환경
 - ReactJS, React Bootstrap
-- Spring
+- Spring, Java
 - Oracle
   
 ## ERD
