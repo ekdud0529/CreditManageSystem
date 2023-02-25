@@ -19,7 +19,7 @@
 - ReactJS, React Bootstrap
 - Spring, Java
 - Oracle
-<img width="900" src="https://user-images.githubusercontent.com/45174177/221343975-4ab2d870-a430-4474-ade1-bbcccb411690.png">
+<img width="500" src="https://user-images.githubusercontent.com/45174177/221343975-4ab2d870-a430-4474-ade1-bbcccb411690.png">
 
 ## ERD
 ![KakaoTalk_20220123_191040139](https://user-images.githubusercontent.com/45174177/199898786-5fb35da5-2342-4d65-b56d-7b17ef4bff27.png)
