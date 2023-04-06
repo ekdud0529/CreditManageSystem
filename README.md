@@ -8,7 +8,7 @@
 |:---:|---|---|:---:|
 |이수 과목 관리|- 과목 검색<br>- 과목 추가<br>- 과목 삭제<br>- 이수 상태 저장|- 이수 구분(전필, 전선, 일선, 공학인증필수, 교양)<br>- 공학 구분(BSM, 전문 교양, 공학 주제, 설계)|[nature1216](https://github.com/nature1216)|
 |졸업 시뮬레이션|- 과목 검색<br>- 과목 추가<br>- 과목 삭제<br>- 졸업 시뮬레이션 결과 보기|- 이수 구분별 최소 학점 이상 이수 시 만족, 미이수 시 불만족 표시<br>- 선후수 만족 여부 표시<br>- 예상 총 평점, 현재 총 평점 표시|[dpdms529](https://github.com/dpdms529)|
-|회원 관리|- 회원가입<br>- 로그인<br>- 로그아웃||[daykim](https://github.com/ekdud0529)|
+|학생 관리|- 회원가입<br>- 로그인<br>- 로그아웃||[daykim](https://github.com/ekdud0529)|
 
 ## 팀원
 <a href="https://github.com/dpdms529/CreditManageSystem/graphs/contributors">
