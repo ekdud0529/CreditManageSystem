@@ -23,7 +23,14 @@
 
 ## ERD
 ![KakaoTalk_20220123_191040139](https://user-images.githubusercontent.com/45174177/199898786-5fb35da5-2342-4d65-b56d-7b17ef4bff27.png)
-  
+
+## 학생 관리
+|기능|Method|Request|Response|
+|:---:|---|---|---|
+|회원가입|POST|{studentId, name, Password}|---|
+|로그인|POST|{studentId, Password}|---|
+|로그아웃|GET|---|---|
+
 ## 구현 화면
 ### 홈 화면
 <img width="900" src="https://user-images.githubusercontent.com/45174177/199899723-2665ccff-17c5-46d1-9d11-64ff5006fb25.png">
