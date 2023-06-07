@@ -27,7 +27,7 @@
 ## 학생 관리
 |기능|Method|Request|Response|
 |:---:|---|---|---|
-|회원가입|POST|{<br>studentId,<br>    name, <br>     password<br>}|---|
+|회원가입|POST|{<br>&nbsp;&nbsp;&nbsp;studentId,<br>name, <br>     password<br>}|---|
 |로그인|POST|{<br> studentId,<br>  password<br>}|---|
 |로그아웃|GET|---|---|
 
