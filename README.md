@@ -27,9 +27,10 @@
 ## 학생 관리
 |기능|Method|Request|Response|
 |:---:|---|---|---|
-|회원가입|POST|{<br>&nbsp;&nbsp;&nbsp;&nbsp;studentId,<br>&nbsp;&nbsp;&nbsp;&nbsp;name, <br>&nbsp;&nbsp;&nbsp;&nbsp;password<br>}|---|
+|회원가입|POST|{<br>&nbsp;&nbsp;&nbsp;&nbsp;studentId,<br>&nbsp;&nbsp;&nbsp;&nbsp;name, <br>&nbsp;&nbsp;&nbsp;&nbsp;password<br>}|- 회원가입 성공
+-> DB 저장 및 성공 반환 및 로그인 페이지 이동<br>- studentId 중복 -> 실패 반환|
 |로그인|POST|{<br>&nbsp;&nbsp;&nbsp;&nbsp;studentId,<br>&nbsp;&nbsp;&nbsp;&nbsp;password<br>}|---|
-|로그아웃|GET|---|---|
+|로그아웃|GET||---|
 
 ## 구현 화면
 ### 홈 화면
